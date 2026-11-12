@@ -1,0 +1,605 @@
+/* =========================================================
+   Liquid glass
+   Verre épais et lumineux : flou + saturation, reflet en haut à gauche,
+   liseré clair, ombre profonde. Utilisé par :
+   - le menu Musique de la barre du haut
+   - la fenêtre de l'app Musique
+   - le menu du clic droit (et ses sous-menus)
+   - le choix de dispositions des fenêtres
+   ========================================================= */
+
+/* ---------- Matière commune ---------- */
+#music-menu,
+#cc-menu,
+#cal-menu,
+#context-menu,
+#context-sub,
+#snap-flyout,
+.window[data-app="music"] {
+  --lg-fill:
+    radial-gradient(130% 90% at 0% 0%, rgba(255, 255, 255, 0.62), transparent 55%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.22));
+  --lg-edge: rgba(255, 255, 255, 0.62);
+  --lg-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 26px rgba(255, 255, 255, 0.16),
+    0 28px 64px rgba(0, 0, 0, 0.34),
+    0 4px 14px rgba(0, 0, 0, 0.18);
+  --lg-soft: rgba(255, 255, 255, 0.34);   /* boutons / pistes en verre */
+  --lg-soft-hi: rgba(255, 255, 255, 0.62);
+  background: var(--lg-fill);
+  backdrop-filter: blur(30px) saturate(210%) brightness(1.08);
+  -webkit-backdrop-filter: blur(30px) saturate(210%) brightness(1.08);
+  border: 1px solid var(--lg-edge);
+  box-shadow: var(--lg-shadow);
+}
+body.dark #music-menu,
+body.dark #cc-menu,
+body.dark #cal-menu,
+body.dark #context-menu,
+body.dark #context-sub,
+body.dark #snap-flyout,
+body.dark .window[data-app="music"] {
+  --lg-fill:
+    radial-gradient(130% 90% at 0% 0%, rgba(255, 255, 255, 0.2), transparent 55%),
+    linear-gradient(160deg, rgba(78, 78, 90, 0.58), rgba(24, 24, 30, 0.52));
+  --lg-edge: rgba(255, 255, 255, 0.22);
+  --lg-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 26px rgba(255, 255, 255, 0.05),
+    0 28px 64px rgba(0, 0, 0, 0.55),
+    0 4px 14px rgba(0, 0, 0, 0.3);
+  --lg-soft: rgba(255, 255, 255, 0.12);
+  --lg-soft-hi: rgba(255, 255, 255, 0.26);
+}
+
+/* =========================================================
+   1. Menu Musique (barre du haut)
+   ========================================================= */
+#music-menu {
+  width: 296px;
+  padding: 14px;
+  gap: 12px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 28px;
+  transform-origin: top right;
+}
+#music-menu.open { animation: lg-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
+@keyframes lg-pop {
+  from { opacity: 0; transform: translateY(-6px) scale(0.92); }
+  to { opacity: 1; transform: none; }
+}
+/* Lueur colorée tirée de la pochette */
+#music-menu::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  z-index: -1;
+  background: var(--cover, none) center / cover no-repeat;
+  filter: blur(34px) saturate(1.7) brightness(1.35);
+  opacity: 0.36;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+#music-menu .mm-top { gap: 12px; }
+#music-menu .mm-cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+#music-menu .mm-title { font-size: 14px; }
+#music-menu .mm-artist { color: color-mix(in srgb, var(--text) 62%, transparent); }
+#music-menu .mm-track {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--lg-soft);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22), 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+#music-menu .mm-fill {
+  border-radius: 99px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 80%, #fff), var(--accent));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+#music-menu .mm-ctl { gap: 14px; }
+#music-menu .mm-ctl button {
+  width: 40px;
+  height: 40px;
+  background: var(--lg-soft);
+  border: 1px solid var(--lg-edge);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 4px 12px rgba(0, 0, 0, 0.16);
+  transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+}
+#music-menu .mm-ctl button:hover { background: var(--lg-soft-hi); color: var(--text); transform: translateY(-1px) scale(1.06); }
+#music-menu .mm-ctl button:active { transform: scale(0.94); }
+#music-menu .mm-ctl button.main {
+  width: 52px;
+  height: 52px;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 90%, #fff), color-mix(in srgb, var(--accent) 72%, transparent));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.7), 0 8px 22px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+#music-menu .mm-ctl button.main:hover { color: #fff; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 95%, #fff), color-mix(in srgb, var(--accent) 80%, transparent)); filter: none; }
+#music-menu .mm-ctl button.main svg { width: 22px; height: 22px; }
+#music-menu .mm-open {
+  padding: 9px 12px;
+  border-radius: 16px;
+  text-align: center;
+  font-size: 13px;
+  background: var(--lg-soft);
+  border: 1px solid var(--lg-edge);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: background 0.16s ease, box-shadow 0.16s ease;
+}
+#music-menu .mm-open:hover {
+  color: #fff;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, #fff), color-mix(in srgb, var(--accent) 74%, transparent));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* =========================================================
+   2. Fenêtre de l'app Musique
+   ========================================================= */
+.window[data-app="music"] {
+  isolation: isolate;
+  border-radius: 30px;
+  /* voile clair par-dessus le verre : fenêtre plus lumineuse */
+  background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), var(--lg-fill);
+}
+body.dark .window[data-app="music"] {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07)),
+    radial-gradient(130% 90% at 0% 0%, rgba(255, 255, 255, 0.26), transparent 55%),
+    linear-gradient(160deg, rgba(108, 108, 124, 0.5), rgba(46, 46, 58, 0.44));
+}
+.window[data-app="music"].active {
+  box-shadow: var(--lg-shadow);
+}
+.window[data-app="music"]:not(.active) {
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.6), 0 14px 36px rgba(0, 0, 0, 0.24);
+}
+/* Lueur de la pochette, derrière tout le contenu */
+.window[data-app="music"]::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  background: var(--cover, none) center / cover no-repeat;
+  filter: blur(46px) saturate(1.7) brightness(1.4);
+  opacity: 0.34;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+/* Reflet diagonal qui donne l'impression de vitre */
+.window[data-app="music"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 32%);
+  pointer-events: none;
+}
+.window[data-app="music"] .titlebar {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  height: 44px;
+  padding: 0 16px;
+}
+.window[data-app="music"] .win-title { color: var(--text); }
+.window[data-app="music"] .traffic { gap: 9px; }
+.window[data-app="music"] .traffic button {
+  width: 13px;
+  height: 13px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.window[data-app="music"] .win-body { background: transparent; }
+
+.window[data-app="music"] .mu { padding: 22px 24px 26px; }
+.window[data-app="music"] .mu-cover {
+  width: 216px;
+  height: 216px;
+  margin-bottom: 10px;
+  border-radius: 34px;
+  padding: 5px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.9), 0 22px 46px rgba(0, 0, 0, 0.38);
+}
+.window[data-app="music"] .mu-cover img { border-radius: 29px; }
+.window[data-app="music"] .mu-title { font-size: 18px; }
+.window[data-app="music"] .mu-artist { color: color-mix(in srgb, var(--text) 62%, transparent); }
+.window[data-app="music"] .mu h3 { color: color-mix(in srgb, var(--text) 58%, transparent); }
+.window[data-app="music"] .mu-times { color: color-mix(in srgb, var(--text) 58%, transparent); }
+
+/* Curseurs (position + volume) en verre */
+.window[data-app="music"] .mu input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 99px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--accent) var(--val, 0%), var(--lg-soft) var(--val, 0%));
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.window[data-app="music"] .mu input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 255, 255, 0.72));
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35), inset 0 -2px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease;
+}
+.window[data-app="music"] .mu input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.18); }
+.window[data-app="music"] .mu input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+.window[data-app="music"] .mu input[type="range"]::-moz-range-track { background: transparent; }
+
+/* Boutons de lecture */
+.window[data-app="music"] .mu-controls { gap: 24px; margin: 12px 0; }
+.window[data-app="music"] .mu-btn {
+  width: 50px;
+  height: 50px;
+  background: var(--lg-soft);
+  border: 1px solid var(--lg-edge);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.75), 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+.window[data-app="music"] .mu-btn { color: var(--text); }
+.window[data-app="music"] .mu-play { color: #fff; }
+.window[data-app="music"] .mu-btn:hover { background: var(--lg-soft-hi); transform: translateY(-1px) scale(1.06); }
+.window[data-app="music"] .mu-btn:active { transform: scale(0.94); }
+.window[data-app="music"] .mu-play {
+  width: 66px;
+  height: 66px;
+  border-color: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 90%, #fff), color-mix(in srgb, var(--accent) 72%, transparent));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.7), 0 12px 28px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.window[data-app="music"] .mu-play:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 95%, #fff), color-mix(in srgb, var(--accent) 80%, transparent)); }
+
+/* Playlist */
+.window[data-app="music"] .mu-list { gap: 6px; }
+.window[data-app="music"] .mu-item {
+  padding: 5px 8px 5px 6px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  transition: background 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.window[data-app="music"] .mu-item:hover {
+  background: var(--lg-soft);
+  border-color: var(--lg-edge);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+.window[data-app="music"] .mu-item.current {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 90%, #fff), color-mix(in srgb, var(--accent) 70%, transparent));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.6), 0 8px 20px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.window[data-app="music"] .mu-item .delete-btn { border-radius: 99px; }
+
+/* =========================================================
+   3. Clic droit
+   ========================================================= */
+#context-menu,
+#context-sub {
+  min-width: 266px;
+  padding: 8px;
+  gap: 2px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 24px;
+  outline: none;
+}
+#context-sub { min-width: 220px; }
+#context-menu.open,
+#context-sub.open { animation: ctx-in 0.24s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
+@keyframes ctx-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+/* Reflet qui suit la souris */
+#context-menu::after,
+#context-sub::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(190px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.38), transparent 62%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+#context-menu:hover::after,
+#context-sub:hover::after { opacity: 1; }
+body.dark #context-menu::after,
+body.dark #context-sub::after { background: radial-gradient(190px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.16), transparent 62%); }
+
+/* Apparition en cascade des lignes */
+#context-menu.open > *,
+#context-sub.open > * {
+  animation: ctx-item 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 16ms + 30ms);
+}
+@keyframes ctx-item {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: none; }
+}
+
+#context-menu .ctx-row,
+#context-sub .ctx-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  outline: none;
+  transition: background 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+}
+#context-menu .ctx-row:active,
+#context-sub .ctx-row:active { transform: scale(0.98); }
+#context-menu .ctx-row:hover,
+#context-menu .ctx-row:focus-visible,
+#context-menu .ctx-row.sub-open,
+#context-sub .ctx-row:hover,
+#context-sub .ctx-row:focus-visible {
+  color: #fff;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, #fff), color-mix(in srgb, var(--accent) 74%, transparent));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+#context-menu .ctx-row.disabled,
+#context-sub .ctx-row.disabled { opacity: 0.4; pointer-events: none; }
+#context-menu .ctx-row.danger,
+#context-sub .ctx-row.danger { color: #ff3b30; }
+body.dark #context-menu .ctx-row.danger,
+body.dark #context-sub .ctx-row.danger { color: #ff6961; }
+#context-menu .ctx-row.danger:hover,
+#context-menu .ctx-row.danger:focus-visible,
+#context-sub .ctx-row.danger:hover,
+#context-sub .ctx-row.danger:focus-visible {
+  color: #fff;
+  background: linear-gradient(180deg, #ff6259, rgba(255, 69, 58, 0.78));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 14px rgba(255, 69, 58, 0.4);
+}
+#context-menu hr,
+#context-sub hr {
+  height: 1px;
+  margin: 5px 10px;
+  border: none;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.16), transparent);
+}
+body.dark #context-menu hr,
+body.dark #context-sub hr { background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent); }
+.ctx-title {
+  padding: 7px 12px 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+.ctx-ico { display: grid; place-items: center; width: 18px; font-size: 16px; opacity: 0.88; }
+.ctx-label { flex: 1; text-align: left; white-space: nowrap; }
+.ctx-hint { font-size: 11.5px; opacity: 0.55; white-space: nowrap; }
+.ctx-check { display: grid; font-size: 14px; }
+.ctx-chevron { display: grid; font-size: 13px; opacity: 0.6; }
+.ctx-row:hover .ctx-hint,
+.ctx-row:focus-visible .ctx-hint { opacity: 0.85; }
+.ctx-swatch {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================================
+   Éditeur de document texte (Nouveau document)
+   ========================================================= */
+.note-editor {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  padding: 16px 18px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  color: var(--text);
+  font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* =========================================================
+   Barres de défilement : fines, arrondies, en verre
+   (la barre apparaît discrètement, s'épaissit au survol)
+   ========================================================= */
+:root { --sb-thumb: rgba(60, 60, 75, 0.32); --sb-thumb-hi: rgba(60, 60, 75, 0.55); --sb-thumb-act: color-mix(in srgb, var(--accent) 80%, transparent); }
+body.dark { --sb-thumb: rgba(255, 255, 255, 0.26); --sb-thumb-hi: rgba(255, 255, 255, 0.46); }
+
+*::-webkit-scrollbar,
+.wlapp ::-webkit-scrollbar { width: 14px; height: 14px; background: transparent; }
+*::-webkit-scrollbar-track,
+.wlapp ::-webkit-scrollbar-track { background: transparent; margin: 8px; }
+*::-webkit-scrollbar-corner { background: transparent; }
+*::-webkit-scrollbar-thumb,
+.wlapp ::-webkit-scrollbar-thumb {
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: 99px;
+  /* la bordure transparente amincit visuellement la barre */
+  border: 4px solid transparent;
+  background-color: var(--sb-thumb);
+  background-clip: padding-box;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+*::-webkit-scrollbar-thumb:hover,
+.wlapp ::-webkit-scrollbar-thumb:hover {
+  border-width: 3px;
+  background-color: var(--sb-thumb-hi);
+}
+*::-webkit-scrollbar-thumb:active,
+.wlapp ::-webkit-scrollbar-thumb:active { background-color: var(--sb-thumb-act); }
+
+/* Firefox */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--sb-thumb-hi) transparent; }
+}
+/* Chromium récent : la propriété standard prendrait le dessus sur le style ci-dessus */
+.wlapp .wl-scroll { scrollbar-width: auto; }
+
+
+/* =========================================================
+   Barre du haut : Centre de contrôle, calendrier
+   ========================================================= */
+.mb-wrap { position: relative; display: flex; align-items: center; height: 24px; }
+.mb-wrap:has(.menu-pop.open) > .menu-item { background: var(--press); }
+#cc-menu, #cal-menu { top: 46px; left: auto; right: 12px; overflow: hidden; border-radius: 26px; transform-origin: top right; }
+#cc-menu.open, #cal-menu.open { animation: lg-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
+
+/* Centre de contrôle */
+#cc-menu { width: 348px; padding: 14px; gap: 12px; }
+.cc-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+#cc-menu .cc-tile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 18px;
+  border: 1px solid var(--lg-edge);
+  background: var(--lg-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  white-space: nowrap;
+  transition: background 0.16s ease, transform 0.12s ease, box-shadow 0.16s ease;
+}
+#cc-menu .cc-tile:active { transform: scale(0.96); }
+#cc-menu .cc-tile:hover { background: var(--lg-soft-hi); color: var(--text); }
+#cc-menu .cc-tile .cc-ico {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.4);
+}
+#cc-menu .cc-tile small { display: block; margin-top: 1px; font-size: 10.5px; color: var(--text-2); }
+#cc-menu .cc-tile.on,
+#cc-menu .cc-tile.on:hover {
+  color: #fff;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 90%, #fff), color-mix(in srgb, var(--accent) 72%, transparent));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.6), 0 6px 18px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+#cc-menu .cc-tile.on small { color: rgba(255, 255, 255, 0.85); }
+#cc-menu .cc-tile.on .cc-ico { background: rgba(255, 255, 255, 0.28); }
+.cc-slider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--lg-edge);
+  background: var(--lg-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+.cc-slider .cc-label { width: 74px; font-size: 12px; flex-shrink: 0; }
+.cc-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--accent) var(--val, 0%), rgba(255, 255, 255, 0.45) var(--val, 0%));
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.22);
+}
+.cc-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 255, 255, 0.75));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.cc-slider input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; border: none; background: #fff; }
+.cc-accents { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; border-radius: 18px; border: 1px solid var(--lg-edge); background: var(--lg-soft); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65); }
+.cc-accents span { font-size: 12px; }
+#cc-menu .cc-dot {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.14s ease;
+}
+#cc-menu .cc-dot:hover { transform: scale(1.18); }
+#cc-menu .cc-dot.on { box-shadow: 0 0 0 2px var(--text), 0 2px 6px rgba(0, 0, 0, 0.3); }
+
+/* Calendrier */
+#cal-menu { width: 296px; padding: 14px 14px 12px; gap: 8px; }
+.cal-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.cal-title { flex: 1; font-size: 15px; text-transform: capitalize; padding-left: 4px; }
+#cal-menu .cal-nav {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lg-soft);
+  border: 1px solid var(--lg-edge);
+  font-size: 16px;
+  text-align: center;
+}
+#cal-menu .cal-nav:hover { background: var(--lg-soft-hi); color: var(--text); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+.cal-dow { padding: 6px 0 4px; font-size: 10.5px; text-transform: uppercase; color: var(--text-2); }
+.cal-day { display: grid; place-items: center; height: 34px; border-radius: 12px; font-size: 12.5px; }
+.cal-day.out { opacity: 0.35; }
+.cal-day.today {
+  color: #fff;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 90%, #fff), color-mix(in srgb, var(--accent) 72%, transparent));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 4px 12px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+#cal-menu .cal-today-btn { margin-top: 4px; text-align: center; border-radius: 14px; background: var(--lg-soft); border: 1px solid var(--lg-edge); font-size: 12.5px; }
+#cal-menu .cal-today-btn:hover { background: var(--lg-soft-hi); color: var(--text); }
+
+/* Raccourcis clavier (Aide) */
+.kbd-list { padding: 14px 18px; display: grid; gap: 4px; font-size: 13px; user-select: text; }
+.kbd-list h4 { margin: 10px 0 4px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+.kbd-row { display: flex; justify-content: space-between; gap: 16px; padding: 5px 0; border-bottom: 1px solid var(--sep); }
+.kbd-row kbd { font: inherit; font-size: 12px; padding: 2px 8px; border-radius: 8px; background: var(--hover); border: 1px solid var(--sep); white-space: nowrap; }
+
+/* Variateur de luminosité */
+#dim-layer { position: fixed; inset: 0; z-index: 9000; background: #000; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.menu-item.bar-open { background: var(--press); }

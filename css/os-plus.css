@@ -1,0 +1,576 @@
+/* Spotlight, Notes, Minuteur : style macOS en verre, suit le mode sombre via les variables */
+#spot-btn .svg-ico { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+
+.spot-overlay { position: fixed; inset: 0; z-index: 99990; display: flex; justify-content: center; align-items: flex-start; padding-top: 14vh; background: rgba(0, 0, 0, 0.22); backdrop-filter: blur(3px); animation: sp-fade 0.15s ease; }
+.spot { width: min(620px, 92vw); border-radius: 22px; overflow: hidden; background: var(--glass), var(--menu-bg); border: 1px solid var(--glass-edge); box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35), inset 0 1px 0 var(--glass-edge); backdrop-filter: blur(30px) saturate(1.4); color: var(--text); animation: sp-pop 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.spot-in { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--sep); }
+.spot-in .svg-ico { width: 22px; height: 22px; flex-shrink: 0; color: var(--text-2); }
+.spot-in input { flex: 1; border: none; outline: none; background: none; font-size: 19px; color: var(--text); }
+.spot-res { max-height: 380px; overflow-y: auto; padding: 6px; scrollbar-width: thin; }
+.spot-group { padding: 8px 12px 3px; font-size: 11px; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; }
+.spot-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 9px 12px; border: none; border-radius: 12px; background: none; color: var(--text); font-size: 14px; text-align: left; cursor: pointer; }
+.spot-row i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--hover); flex-shrink: 0; }
+.spot-row i .svg-ico { width: 16px; height: 16px; }
+.spot-t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.spot-row small { color: var(--text-2); font-size: 12px; }
+.spot-row.on { background: var(--accent); color: #fff; }
+.spot-row.on i { background: rgba(255, 255, 255, 0.22); }
+.spot-row.on small { color: rgba(255, 255, 255, 0.85); }
+.spot-empty { text-align: center; padding: 24px; color: var(--text-2); font-size: 13px; }
+.spot-foot { display: flex; justify-content: center; gap: 18px; padding: 8px; font-size: 11px; color: var(--text-2); border-top: 1px solid var(--sep); }
+@keyframes sp-fade { from { opacity: 0; } }
+@keyframes sp-pop { from { opacity: 0; transform: translateY(-10px) scale(0.97); } }
+
+/* Notes */
+.nt { display: flex; flex: 1; min-height: 0; background: var(--win-bg); color: var(--text); }
+.nt-side { width: 210px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--sidebar); border-right: 1px solid var(--sep); }
+.nt-head { display: flex; gap: 6px; padding: 10px; }
+.nt-search { flex: 1; min-width: 0; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--sep); background: var(--input-bg); color: var(--text); font-size: 12px; outline: none; }
+.nt-search:focus { border-color: var(--accent); }
+.nt-new, .nt-pin, .nt-del { display: grid; place-items: center; width: 30px; height: 30px; border: none; border-radius: 8px; background: var(--hover); color: var(--text); cursor: pointer; }
+.nt-new:hover, .nt-pin:hover, .nt-del:hover { background: var(--press); }
+.nt-pin.on { background: #ffd60a; color: #1d1d1f; }
+.nt-new .svg-ico, .nt-pin .svg-ico, .nt-del .svg-ico { width: 16px; height: 16px; }
+.nt-list { flex: 1; overflow-y: auto; padding: 0 8px 8px; display: flex; flex-direction: column; gap: 2px; scrollbar-width: thin; }
+.nt-item { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border: none; border-radius: 9px; background: none; color: var(--text); text-align: left; cursor: pointer; }
+.nt-item strong { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nt-item span { font-size: 11px; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nt-item:hover { background: var(--hover); }
+.nt-item.on { background: var(--accent); color: #fff; }
+.nt-item.on span { color: rgba(255, 255, 255, 0.8); }
+.nt-empty { text-align: center; font-size: 12px; color: var(--text-2); padding: 20px 0; }
+.nt-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.nt-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px 0; }
+.nt-meta { flex: 1; font-size: 11px; color: var(--text-2); }
+.nt-text { flex: 1; resize: none; border: none; outline: none; padding: 12px 18px 18px; background: none; color: var(--text); font: 14px/1.6 inherit; font-family: inherit; }
+
+/* Minuteur */
+.tm { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px; background: var(--win-bg); color: var(--text); overflow-y: auto; }
+.tm-ring { position: relative; width: 200px; height: 200px; flex-shrink: 0; }
+.tm-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.tm-track, .tm-bar { fill: none; stroke-width: 10; }
+.tm-track { stroke: var(--hover); }
+.tm-bar { stroke: url(#none); stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.3s linear; }
+.tm-time { position: absolute; inset: 0; display: grid; place-items: center; font-size: 40px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tm-label { position: absolute; left: 0; right: 0; bottom: 48px; text-align: center; font-size: 12px; color: var(--text-2); }
+.tm-presets { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.tm-custom { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.tm-custom input { width: 70px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--sep); background: var(--input-bg); color: var(--text); }
+.tm-ctl { display: flex; gap: 10px; margin-top: auto; }
+.tm-ctl .btn { min-width: 110px; }
+
+/* =========================================================
+   Polices (réglage global) + effet verre + taille du Dock
+   ========================================================= */
+body { font-family: var(--os-font, 'Dela Gothic One', -apple-system, 'Segoe UI', sans-serif); }
+body.font-apps .wlapp,
+body.font-apps .wlapp *,
+body.font-apps .dela-gothic-text { font-family: var(--os-font) !important; }
+
+body[data-glass="soft"] #menubar, body[data-glass="soft"] #dock, body[data-glass="soft"] .menu-pop { backdrop-filter: blur(8px) saturate(120%); -webkit-backdrop-filter: blur(8px) saturate(120%); }
+body[data-glass="strong"] #menubar, body[data-glass="strong"] #dock, body[data-glass="strong"] .menu-pop { backdrop-filter: blur(46px) saturate(230%) brightness(1.08); -webkit-backdrop-filter: blur(46px) saturate(230%) brightness(1.08); }
+body[data-dock="s"] .dock-item { width: 46px; height: 46px; font-size: 24px; border-radius: 12px; }
+body[data-dock="l"] .dock-item { width: 70px; height: 70px; font-size: 36px; border-radius: 17px; }
+
+/* ---------- Icônes du Dock : Notes et Minuteur ---------- */
+.dock-item[data-app="notes"] { background: linear-gradient(145deg, #ffd43b, #f08c00); }
+.dock-item[data-app="timer"] { background: linear-gradient(145deg, #43cea2, #185a9d); }
+.dock-item[data-app="notes"], .dock-item[data-app="timer"] {
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), inset 0 -2px 4px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================================
+   Matière « liquid glass » commune (menu du logo, Minuteur, login)
+   ========================================================= */
+#apple-menu, #user-menu, .window[data-app="timer"], #lock-panel, #edit-login, #back-clock {
+  --lg-fill:
+    radial-gradient(130% 90% at 0% 0%, rgba(255, 255, 255, 0.62), transparent 55%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.22));
+  --lg-edge: rgba(255, 255, 255, 0.62);
+  --lg-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 26px rgba(255, 255, 255, 0.16), 0 28px 64px rgba(0, 0, 0, 0.34), 0 4px 14px rgba(0, 0, 0, 0.18);
+  --lg-soft: rgba(255, 255, 255, 0.34);
+  --lg-soft-hi: rgba(255, 255, 255, 0.62);
+}
+body.dark #apple-menu, body.dark #user-menu, body.dark .window[data-app="timer"], body.dark #lock-panel, body.dark #edit-login, body.dark #back-clock {
+  --lg-fill:
+    radial-gradient(130% 90% at 0% 0%, rgba(255, 255, 255, 0.2), transparent 55%),
+    linear-gradient(160deg, rgba(78, 78, 90, 0.58), rgba(24, 24, 30, 0.52));
+  --lg-edge: rgba(255, 255, 255, 0.22);
+  --lg-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.34), inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 26px rgba(255, 255, 255, 0.05), 0 28px 64px rgba(0, 0, 0, 0.55), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --lg-soft: rgba(255, 255, 255, 0.12);
+  --lg-soft-hi: rgba(255, 255, 255, 0.26);
+}
+
+/* ---------- Menu du logo ---------- */
+#apple-menu {
+  min-width: 250px;
+  padding: 8px;
+  gap: 2px;
+  border-radius: 24px;
+  background: var(--lg-fill);
+  backdrop-filter: blur(30px) saturate(210%) brightness(1.08);
+  -webkit-backdrop-filter: blur(30px) saturate(210%) brightness(1.08);
+  border: 1px solid var(--lg-edge);
+  box-shadow: var(--lg-shadow);
+  transform-origin: top left;
+}
+#apple-menu.open { animation: lg-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
+#apple-menu button {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+#apple-menu button i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 9px; background: var(--lg-soft); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); font-style: normal; transition: background 0.15s; }
+#apple-menu button i .svg-ico { width: 15px; height: 15px; }
+#apple-menu button:hover {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 88%, #fff), var(--accent));
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 6px 16px color-mix(in srgb, var(--accent) 45%, transparent);
+  transform: translateX(2px);
+}
+#apple-menu button:hover i { background: rgba(255, 255, 255, 0.25); }
+#apple-menu hr { border: none; height: 1px; margin: 4px 10px; background: linear-gradient(90deg, transparent, var(--lg-edge), transparent); }
+#apple-wrap:has(#apple-menu.open) #apple-btn { background: var(--lg-soft); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+
+/* =========================================================
+   Minuteur : fenêtre liquid glass
+   ========================================================= */
+.window[data-app="timer"] {
+  isolation: isolate;
+  border-radius: 34px;
+  background: linear-gradient(rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18)), var(--lg-fill);
+  backdrop-filter: blur(30px) saturate(210%) brightness(1.08);
+  -webkit-backdrop-filter: blur(30px) saturate(210%) brightness(1.08);
+  border: 1px solid var(--lg-edge);
+  box-shadow: var(--lg-shadow);
+}
+body.dark .window[data-app="timer"] { background: linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06)), var(--lg-fill); }
+.window[data-app="timer"]::before { /* lueur colorée qui dérive derrière la vitre */
+  content: ""; position: absolute; inset: -25%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(40% 40% at 25% 30%, color-mix(in srgb, var(--accent) 80%, transparent), transparent 70%),
+    radial-gradient(38% 38% at 75% 70%, rgba(255, 120, 200, 0.7), transparent 70%),
+    radial-gradient(30% 30% at 70% 20%, rgba(90, 200, 250, 0.6), transparent 70%);
+  filter: blur(40px) saturate(1.5);
+  opacity: 0.5;
+  animation: tm-drift 16s ease-in-out infinite alternate;
+}
+.window[data-app="timer"]::after { /* reflet de vitre */
+  content: ""; position: absolute; inset: 0; z-index: 5; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 32%);
+}
+@keyframes tm-drift { from { transform: translate(-4%, -3%) rotate(0deg); } to { transform: translate(5%, 4%) rotate(14deg); } }
+.window[data-app="timer"] .titlebar { background: transparent; border-bottom: 1px solid rgba(255, 255, 255, 0.22); height: 44px; padding: 0 16px; }
+.window[data-app="timer"] .win-title { color: var(--text); }
+.window[data-app="timer"] .traffic { gap: 9px; }
+.window[data-app="timer"] .traffic button { width: 13px; height: 13px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.25); }
+.window[data-app="timer"] .win-body { background: transparent; }
+.window[data-app="timer"] .tm { background: transparent; }
+
+.tm-ring::before { /* disque de verre au centre de l'anneau */
+  content: ""; position: absolute; inset: 18px; border-radius: 50%;
+  background: radial-gradient(90% 70% at 30% 15%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.08) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.8), inset 0 -6px 14px rgba(255, 255, 255, 0.12), 0 14px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+}
+.tm-ring svg { position: relative; z-index: 1; overflow: visible; }
+.tm-track { stroke: rgba(255, 255, 255, 0.28); }
+.tm-bar { stroke: url(#tmg); filter: drop-shadow(0 0 6px rgba(150, 160, 255, 0.7)); }
+.tm-time, .tm-label { z-index: 2; }
+.tm-time { text-shadow: 0 2px 12px rgba(0, 0, 0, 0.18); }
+.tm.run .tm-bar { animation: tm-glow 2s ease-in-out infinite alternate; }
+@keyframes tm-glow { from { filter: drop-shadow(0 0 4px rgba(150, 160, 255, 0.5)); } to { filter: drop-shadow(0 0 12px rgba(255, 150, 220, 0.9)); } }
+.window[data-app="timer"] .btn-outline {
+  border: 1px solid var(--lg-edge); border-radius: 999px; background: var(--lg-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 2px 8px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px); transition: transform 0.15s, background 0.15s;
+}
+.window[data-app="timer"] .btn-outline:hover { background: var(--lg-soft-hi); transform: translateY(-1px); }
+.window[data-app="timer"] .btn {
+  border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 999px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 80%, #fff), var(--accent));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.7), 0 8px 20px color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: transform 0.15s;
+}
+.window[data-app="timer"] .btn:hover { transform: translateY(-1px) scale(1.03); }
+.window[data-app="timer"] .tm-custom input { border-radius: 999px; background: var(--lg-soft); border: 1px solid var(--lg-edge); text-align: center; }
+
+/* =========================================================
+   Écran de connexion : boutons et panneau en liquid glass
+   ========================================================= */
+#edit-login, #back-clock {
+  position: absolute; z-index: 3;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--lg-edge);
+  background: var(--lg-fill);
+  box-shadow: var(--lg-shadow);
+  color: #fff;
+  font-size: 13px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(24px) saturate(200%) brightness(1.08);
+  -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.08);
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s;
+}
+#edit-login { right: 20px; bottom: 20px; }
+#back-clock { left: 20px; top: 20px; }
+#edit-login::after, #back-clock::after { /* éclat au survol */
+  content: ""; position: absolute; inset: 0 auto 0 -70%; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-18deg); transition: left 0.55s ease; pointer-events: none;
+}
+#edit-login:hover, #back-clock:hover { transform: translateY(-2px) scale(1.04); }
+#edit-login:hover::after, #back-clock:hover::after { left: 130%; }
+#edit-login:active, #back-clock:active { transform: scale(0.97); }
+#edit-login .svg-ico, #back-clock .svg-ico { width: 16px; height: 16px; }
+#login-screen.editing #edit-login { background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 85%, #fff), var(--accent)); }
+
+#login-screen > .lock-panel {
+  left: 20px; bottom: 72px;
+  width: min(420px, calc(100vw - 40px));
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  padding: 18px;
+  border-radius: 30px;
+  background: var(--lg-fill);
+  border: 1px solid var(--lg-edge);
+  box-shadow: var(--lg-shadow);
+  backdrop-filter: blur(34px) saturate(210%) brightness(1.08);
+  -webkit-backdrop-filter: blur(34px) saturate(210%) brightness(1.08);
+  color: #fff;
+  scrollbar-width: none;
+  animation: lg-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+}
+.lp-title { display: flex; align-items: center; gap: 8px; font-size: 16px; margin-bottom: 14px; }
+.lp-title .svg-ico { width: 18px; height: 18px; }
+#lock-panel .pill { display: inline-flex; align-items: center; gap: 6px; background: var(--lg-soft); border-color: var(--lg-edge); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6); }
+#lock-panel .pill:hover { background: var(--lg-soft-hi); }
+#lock-panel .pill .svg-ico { width: 14px; height: 14px; }
+#lock-panel .wp-thumb { border-radius: 12px; }
+@media (max-width: 640px) { #back-clock { top: 12px; left: 12px; } }
+
+/* ---------- Commandes de style (Réglages + connexion) ---------- */
+.st-wrap { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; }
+.st-sec { display: flex; flex-direction: column; gap: 8px; }
+.st-title { display: flex; align-items: center; gap: 7px; font-size: 12px; opacity: 0.8; margin: 10px 0 6px; }
+.st-sec .st-title { margin: 0; }
+.st-title .svg-ico { width: 14px; height: 14px; }
+.st-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.st-chip {
+  padding: 8px 14px; border-radius: 999px; font-size: 13px; cursor: pointer; color: inherit;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.st-chip:hover { transform: translateY(-1px); background: color-mix(in srgb, currentColor 18%, transparent); }
+.st-chip.on { color: #fff; border-color: rgba(255, 255, 255, 0.5); background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 80%, #fff), var(--accent)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent); }
+.st-wide { align-self: flex-start; }
+.st-sw { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 6px rgba(0, 0, 0, 0.25); cursor: pointer; transition: transform 0.15s; }
+.st-sw:hover { transform: scale(1.12); }
+.st-sw.on { border-color: #fff; outline: 2px solid var(--accent); }
+.st-color { width: 34px; height: 28px; padding: 0; border: none; border-radius: 50%; background: none; cursor: pointer; }
+.st-color::-webkit-color-swatch-wrapper { padding: 0; }
+.st-color::-webkit-color-swatch { border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 50%; }
+.st-color::-moz-color-swatch { border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 50%; }
+
+/* =========================================================
+   Menus du logo et du compte : liquid glass plus dense (moins transparent)
+   ========================================================= */
+#apple-menu, #user-menu {
+  --lg-menu:
+    radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.95), transparent 60%),
+    linear-gradient(160deg, rgba(250, 250, 255, 0.9), rgba(228, 228, 242, 0.86));
+  background: var(--lg-menu);
+  backdrop-filter: blur(44px) saturate(220%);
+  -webkit-backdrop-filter: blur(44px) saturate(220%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    inset 0 1.5px 0 #fff, inset 0 -1px 0 rgba(255, 255, 255, 0.4),
+    0 26px 60px rgba(0, 0, 0, 0.34), 0 4px 14px rgba(0, 0, 0, 0.18);
+  color: var(--text);
+}
+body.dark #apple-menu, body.dark #user-menu {
+  --lg-menu:
+    radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.2), transparent 60%),
+    linear-gradient(160deg, rgba(58, 58, 68, 0.94), rgba(26, 26, 32, 0.92));
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.34), inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 26px 60px rgba(0, 0, 0, 0.6), 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+#apple-menu button i { background: rgba(120, 120, 150, 0.16); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+body.dark #apple-menu button i { background: rgba(255, 255, 255, 0.1); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+#apple-menu hr, #user-menu hr { background: linear-gradient(90deg, transparent, rgba(120, 120, 150, 0.35), transparent); }
+
+/* Menu du compte : même matière et mêmes lignes que le menu du logo */
+#user-menu {
+  min-width: 250px;
+  padding: 8px;
+  gap: 2px;
+  border-radius: 24px;
+  transform-origin: top right;
+}
+#user-menu.open { animation: lg-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.15); }
+#user-menu button {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+#user-menu button:hover {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 88%, #fff), var(--accent));
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 6px 16px color-mix(in srgb, var(--accent) 45%, transparent);
+  transform: translateX(-2px);
+}
+#user-menu .um-item.current { background: rgba(120, 120, 150, 0.14); }
+#user-menu .um-item .avatar.xs { width: 26px; height: 26px; font-size: 12px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 6px rgba(0, 0, 0, 0.2); }
+#user-wrap:has(#user-menu.open) #user-btn { background: var(--lg-soft); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+
+/* =========================================================
+   Accueil : « Mes apps » (raccourcis, épingles Dock / Bureau)
+   ========================================================= */
+.wlapp .wl-myapps { width: 100%; margin-top: 18px; padding: 0 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; }
+.wlapp .wl-myapps-head { display: flex; align-items: center; justify-content: space-between; }
+.wlapp .wl-myapps-title { font-size: 14px; }
+.wlapp .wl-myapps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.wlapp .wl-tile {
+  position: relative;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px;
+  border-radius: 28px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.28));
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.9), 0 10px 24px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(14px);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s;
+}
+.wlapp .wl-tile:hover { transform: translateY(-3px); box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.9), 0 16px 30px rgba(0, 0, 0, 0.22); }
+.wlapp .wl-tile-open { all: unset; box-sizing: border-box; display: flex; align-items: center; gap: 12px; cursor: pointer; font-family: inherit; color: #333; }
+.wlapp .wl-tile-ico { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; border-radius: 15px; color: #fff; font-size: 26px; font-style: normal; box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 5px 12px rgba(0, 0, 0, 0.25); transition: transform 0.2s; }
+.wlapp .wl-tile-open:hover .wl-tile-ico { transform: scale(1.08) rotate(-3deg); }
+.wlapp .wl-tile-open:focus-visible { outline: 2px solid #a066d2; outline-offset: 4px; border-radius: 14px; }
+.wlapp .wl-tile-name { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wlapp .wl-tile-row { display: flex; gap: 6px; }
+.wlapp .wl-tg {
+  all: unset; box-sizing: border-box; flex: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  padding: 6px 4px; border-radius: 12px; font-family: inherit; font-size: 10px; cursor: pointer; color: #333;
+  background: #e0e5ec; box-shadow: 3px 3px 6px rgba(255, 255, 255, 0.5), -3px -3px 6px rgba(0, 0, 0, 0.14);
+  transition: all 0.2s;
+}
+.wlapp .wl-tg .svg-ico { width: 13px; height: 13px; }
+.wlapp .wl-tg:hover:not(:disabled) { transform: translateY(-1px); }
+.wlapp .wl-tg.on { color: #fff; background: linear-gradient(145deg, #a066d2, #7e3bb2); box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.2); }
+.wlapp .wl-tg:disabled { opacity: 0.4; cursor: default; }
+.wlapp .wl-tg:focus-visible { outline: 2px solid #a066d2; outline-offset: 2px; }
+.wlapp .wl-tile-x { all: unset; position: absolute; top: 8px; right: 10px; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; cursor: pointer; opacity: 0; color: #333; background: rgba(0, 0, 0, 0.08); transition: opacity 0.2s; }
+.wlapp .wl-tile-x .svg-ico { width: 11px; height: 11px; stroke-width: 2.4; }
+.wlapp .wl-tile:hover .wl-tile-x, .wlapp .wl-tile-x:focus-visible { opacity: 1; }
+.wlapp .wl-myapps-pick { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; border-radius: 22px; background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.45); }
+.wlapp .wl-myapps-pick .wl-chip { display: inline-flex; align-items: center; gap: 6px; }
+.wlapp .wl-myapps-pick .svg-ico { width: 14px; height: 14px; }
+body.dark .wlapp .wl-tile { background: linear-gradient(160deg, rgba(60, 60, 70, 0.7), rgba(28, 28, 34, 0.6)); border-color: rgba(255, 255, 255, 0.16); box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.25), 0 10px 24px rgba(0, 0, 0, 0.4); }
+body.dark .wlapp .wl-tile-open, body.dark .wlapp .wl-tile-x { color: #f2f2f7; }
+body.dark .wlapp .wl-tg:not(.on) { background: #2c2c30; color: #e6e6ea; box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5), -3px -3px 6px rgba(255, 255, 255, 0.05); }
+body.dark .wlapp .wl-myapps-pick { background: rgba(24, 24, 28, 0.5); border-color: rgba(255, 255, 255, 0.1); }
+
+/* ---------- Icônes colorées sur le bureau ---------- */
+.desk-icon[data-app] .ico { width: 56px; height: 56px; margin: 0 auto; border-radius: 16px; color: #fff; font-size: 30px; box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.5), 0 6px 14px rgba(0, 0, 0, 0.3); background: linear-gradient(145deg, #a066d2, #7e3bb2); }
+.desk-icon[data-app="notes"] .ico { background: linear-gradient(145deg, #ffd43b, #f08c00); }
+.desk-icon[data-app="timer"] .ico { background: linear-gradient(145deg, #43cea2, #185a9d); }
+.desk-icon[data-app="finder"] .ico { background: linear-gradient(145deg, #5ac8fa, #0a84ff); }
+.desk-icon[data-app="settings"] .ico { background: linear-gradient(145deg, #a1a1a6, #636366); }
+.desk-icon[data-app="music"] .ico { background: linear-gradient(145deg, #fa709a, #fee140); }
+.desk-icon[data-app="home"] .ico { background: linear-gradient(145deg, #ff9a9e, #ff5e62); }
+.desk-icon[data-app="rating"] .ico { background: linear-gradient(145deg, #f6d365, #fda085); }
+.desk-icon[data-app="avoir"] .ico { background: linear-gradient(145deg, #7ee8a2, #188e4d); }
+
+/* =========================================================
+   Panneau « Personnaliser » : texte noir en thème clair, blanc en thème sombre
+   ========================================================= */
+#login-screen > .lock-panel {
+  color: var(--text);
+  text-shadow: none;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.92), transparent 60%),
+    linear-gradient(160deg, rgba(250, 250, 255, 0.86), rgba(228, 228, 242, 0.8));
+  border-color: rgba(255, 255, 255, 0.85);
+}
+body.dark #login-screen > .lock-panel {
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.2), transparent 60%),
+    linear-gradient(160deg, rgba(58, 58, 68, 0.9), rgba(26, 26, 32, 0.88));
+  border-color: rgba(255, 255, 255, 0.22);
+}
+#lock-panel .lp-title,
+#lock-panel .st-title,
+#lock-panel .st-title span,
+#lock-panel .st-chip:not(.on) { color: var(--text); text-shadow: none; }
+#lock-panel .st-title { opacity: 0.85; }
+#lock-panel .pill { color: var(--text); text-shadow: none; background: rgba(120, 120, 150, 0.16); border-color: rgba(120, 120, 150, 0.3); }
+#lock-panel .pill:hover { background: rgba(120, 120, 150, 0.28); }
+body.dark #lock-panel .pill { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+body.dark #lock-panel .pill:hover { background: rgba(255, 255, 255, 0.2); }
+#lock-panel .st-chip:not(.on) { background: rgba(120, 120, 150, 0.14); border-color: rgba(120, 120, 150, 0.3); }
+body.dark #lock-panel .st-chip:not(.on) { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+
+/* =========================================================
+   Boutons « Personnaliser » et « Horloge » : texte noir (clair) / blanc (sombre)
+   ========================================================= */
+#edit-login, #back-clock {
+  color: var(--text);
+  text-shadow: none;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
+    linear-gradient(160deg, rgba(250, 250, 255, 0.82), rgba(228, 228, 242, 0.74));
+  border-color: rgba(255, 255, 255, 0.85);
+}
+body.dark #edit-login, body.dark #back-clock {
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 255, 0.2), transparent 60%),
+    linear-gradient(160deg, rgba(58, 58, 68, 0.86), rgba(26, 26, 32, 0.82));
+  border-color: rgba(255, 255, 255, 0.22);
+}
+#edit-login span, #back-clock span { color: var(--text); }
+#login-screen.editing #edit-login { background: radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 255, 0.9), transparent 60%), linear-gradient(160deg, rgba(250, 250, 255, 0.82), rgba(228, 228, 242, 0.74)); box-shadow: var(--lg-shadow), 0 0 0 2px var(--accent); }
+body.dark #login-screen.editing #edit-login { background: radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 255, 0.2), transparent 60%), linear-gradient(160deg, rgba(58, 58, 68, 0.86), rgba(26, 26, 32, 0.82)); }
+
+/* =========================================================
+   Applications système en liquid glass : Finder, Réglages, À propos, Corbeille, Raccourcis
+   ========================================================= */
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]) {
+  --lg-fill:
+    radial-gradient(130% 90% at 0% 0%, rgba(255, 255, 255, 0.62), transparent 55%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.22));
+  --lg-edge: rgba(255, 255, 255, 0.62);
+  --lg-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 26px rgba(255, 255, 255, 0.16), 0 28px 64px rgba(0, 0, 0, 0.34), 0 4px 14px rgba(0, 0, 0, 0.18);
+  --lg-soft: rgba(255, 255, 255, 0.34);
+  --lg-soft-hi: rgba(255, 255, 255, 0.62);
+  isolation: isolate;
+  border-radius: 28px;
+  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), var(--lg-fill);
+  backdrop-filter: blur(34px) saturate(210%) brightness(1.08);
+  -webkit-backdrop-filter: blur(34px) saturate(210%) brightness(1.08);
+  border: 1px solid var(--lg-edge);
+  box-shadow: var(--lg-shadow);
+}
+body.dark .window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]) {
+  --lg-fill:
+    radial-gradient(130% 90% at 0% 0%, rgba(255, 255, 255, 0.2), transparent 55%),
+    linear-gradient(160deg, rgba(78, 78, 90, 0.58), rgba(24, 24, 30, 0.52));
+  --lg-edge: rgba(255, 255, 255, 0.22);
+  --lg-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.34), inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 26px rgba(255, 255, 255, 0.05), 0 28px 64px rgba(0, 0, 0, 0.55), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --lg-soft: rgba(255, 255, 255, 0.12);
+  --lg-soft-hi: rgba(255, 255, 255, 0.26);
+  background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), var(--lg-fill);
+}
+.window.maximized:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]) { border-radius: 0; }
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]):not(.active) {
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.5), 0 14px 36px rgba(0, 0, 0, 0.24);
+}
+/* Lueur d'accent derrière la vitre + reflet diagonal */
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"])::before {
+  content: ""; position: absolute; inset: -20%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38% 38% at 15% 20%, color-mix(in srgb, var(--accent) 70%, transparent), transparent 70%),
+    radial-gradient(34% 34% at 85% 80%, rgba(255, 130, 200, 0.55), transparent 70%);
+  filter: blur(44px) saturate(1.4);
+  opacity: 0.3;
+}
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"])::after {
+  content: ""; position: absolute; inset: 0; z-index: 5; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 30%);
+}
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]) .titlebar {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+  height: 44px;
+  padding: 0 16px;
+}
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]) .traffic { gap: 9px; }
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]) .traffic button { width: 13px; height: 13px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 3px rgba(0, 0, 0, 0.25); }
+.window:is([data-app="finder"], [data-app="settings"], [data-app="about"], [data-app="trash"], [data-app="shortcuts"]) .win-body { background: transparent; }
+
+/* Panneaux internes : verre plus léger que la fenêtre */
+.window :is(.finder-side, .settings-side) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.12));
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.15);
+}
+body.dark .window :is(.finder-side, .settings-side) { background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)); border-right-color: rgba(255, 255, 255, 0.12); }
+.window .side-item { border-radius: 12px; transition: background 0.15s, transform 0.15s, box-shadow 0.15s; }
+.window .side-item:hover { background: var(--lg-soft, rgba(255, 255, 255, 0.34)); }
+.window .side-item.active {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 85%, #fff), var(--accent));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 6px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.window .finder-toolbar { border-bottom: 1px solid rgba(255, 255, 255, 0.24); }
+.window .tb-btn {
+  border: 1px solid var(--lg-edge, rgba(255, 255, 255, 0.5)); border-radius: 999px;
+  background: var(--lg-soft, rgba(255, 255, 255, 0.34));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.15s, background 0.15s;
+}
+.window .tb-btn:hover:not(:disabled) { background: var(--lg-soft-hi, rgba(255, 255, 255, 0.6)); transform: translateY(-1px); }
+.window .item { border-radius: 16px; transition: background 0.15s, transform 0.15s; }
+.window .item:hover { background: var(--lg-soft, rgba(255, 255, 255, 0.3)); }
+.window .item.selected {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 85%, #fff), var(--accent));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 6px 14px color-mix(in srgb, var(--accent) 38%, transparent);
+}
+.window :is(.settings-pane) .row { border-bottom: 1px solid rgba(255, 255, 255, 0.26); }
+.window .account-card { border-radius: 20px; background: var(--lg-soft, rgba(255, 255, 255, 0.3)); border: 1px solid var(--lg-edge, rgba(255, 255, 255, 0.5)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+.window :is(.set-input, .pw-input) {
+  border-radius: 999px; padding: 8px 14px;
+  background: var(--lg-soft, rgba(255, 255, 255, 0.34)); border: 1px solid var(--lg-edge, rgba(255, 255, 255, 0.5));
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.07);
+}
+.window :is(.set-input, .pw-input):focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+.window :is([data-app="settings"], [data-app="finder"]) .btn-outline,
+.window[data-app="settings"] .btn-outline, .window[data-app="shortcuts"] .btn-outline {
+  border: 1px solid var(--lg-edge); border-radius: 999px; background: var(--lg-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.15s, background 0.15s;
+}
+.window[data-app="settings"] .btn-outline:hover { background: var(--lg-soft-hi); transform: translateY(-1px); }
+.window[data-app="settings"] .btn, .window[data-app="settings"] .btn-outline.on {
+  border: 1px solid rgba(255, 255, 255, 0.55); border-radius: 999px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 80%, #fff), var(--accent));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.7), 0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent);
+  color: #fff;
+}
+.window[data-app="settings"] .wp-thumb { border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 12px rgba(0, 0, 0, 0.25); }
+.window[data-app="settings"] .wp-thumb.selected { border-color: #fff; outline: 2px solid var(--accent); }
+.window[data-app="about"] .about-logo-img { filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3)); }
+.window[data-app="shortcuts"] kbd { border-radius: 8px; background: var(--lg-soft); border: 1px solid var(--lg-edge); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+
+/* Dock : réorganisation par glisser-déposer */
+#dock.sorting .dock-item { transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); }
+#dock.sorting .dock-item:hover { transform: none; }
+#dock.sorting .dock-item.sorting-item { transition: none; z-index: 5; cursor: grabbing; box-shadow: 0 14px 26px rgba(0, 0, 0, 0.4); }
+#dock.sorting .dock-item.sorting-item:hover { transform: inherit; }
+.dock-item { touch-action: none; }
+
+/* ---------- Dossiers et documents du bureau : tuile colorée ---------- */
+.desk-icon[data-kind] .ico {
+  width: 56px; height: 56px; margin: 0 auto; border-radius: 16px; color: #fff; font-size: 30px;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.5), 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+.desk-icon[data-kind="folder"] .ico { background: linear-gradient(145deg, #ffd166, #ff9f43); }
+.desk-icon[data-kind="file"] .ico { background: linear-gradient(145deg, #8ec5ff, #4a7dff); }
+.desk-icon[data-kind] .ico .svg-ico { filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); }

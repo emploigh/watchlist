@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#764ba2">
+  <meta name="description" content="Ma Watchlist : critiques, liste à voir et jaquettes de mes animés.">
+  <title>Watchlist</title>
+  <link rel="icon" href="image/logo/logo.png">
+  <link rel="stylesheet" href="css/os.css">
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/watchlist.css">
+  <link rel="stylesheet" href="css/watchlist-window.css">
+  <link rel="stylesheet" href="css/watchlist-plus.css">
+  <link rel="stylesheet" href="css/widgets-ui.css">
+  <link rel="stylesheet" href="css/glass.css">
+  <link rel="stylesheet" href="css/os-plus.css">
+  <link rel="stylesheet" href="css/liquid-plus.css">
+  <link rel="stylesheet" href="css/icons-custom.css">
+  <link rel="stylesheet" href="css/music.css">
+  <link rel="stylesheet" href="css/watchlist-covers.css">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <header id="site-nav" class="site-nav">
+    <a class="site-brand" href="#/home" aria-label="Accueil">
+      <img src="image/logo/blogo.png" alt="" width="34" height="34">
+      <b>Watchlist</b>
+    </a>
+    <nav id="site-tabs" class="site-tabs" aria-label="Navigation principale"></nav>
+    <div class="site-tools">
+      <div id="music-wrap">
+        <button class="site-icon-btn" id="music-btn" type="button" aria-haspopup="true" aria-label="Lecteur de musique" title="Lecteur de musique">
+          <svg class="svg-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17.5V5.2l11.5-2.1V15"/><circle cx="6.2" cy="17.5" r="3"/><circle cx="17.7" cy="15.4" r="3"/></svg>
+          <i class="eq" aria-hidden="true"><b></b><b></b><b></b></i>
+        </button>
+        <div class="menu-pop mm-pop" id="music-menu">
+          <div class="mm-top">
+            <img class="mm-cover" id="mm-cover" alt="">
+            <div class="mm-meta">
+              <div class="mm-title" id="mm-title"></div>
+              <div class="mm-artist" id="mm-artist"></div>
+            </div>
+          </div>
+          <div class="mm-track"><span class="mm-fill" id="mm-fill"></span></div>
+          <div class="mm-ctl">
+            <button id="mm-prev" type="button" aria-label="Précédent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5v14l-9-7zM5 5h3v14H5z" fill="currentColor"/></svg></button>
+            <button id="mm-toggle" class="main" type="button" aria-label="Lecture"></button>
+            <button id="mm-next" type="button" aria-label="Suivant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5v14l9-7zM16 5h3v14h-3z" fill="currentColor"/></svg></button>
+          </div>
+          <button class="mm-open" id="mm-open" type="button">Ouvrir la Musique</button>
+        </div>
+      </div>
+      <input id="site-name" class="site-name" type="text" maxlength="20" placeholder="Ton prénom" autocomplete="given-name" aria-label="Ton prénom">
+      <button id="site-theme" class="site-icon-btn" type="button"></button>
+    </div>
+  </header>
+  <main id="site-main" class="site-main"></main>
+
+  <script src="js/runtime.js"></script>
+  <script src="js/titles.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/watchlist-data.js"></script>
+  <script src="js/covers.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/app-home.js"></script>
+  <script src="js/app-rating.js"></script>
+  <script src="js/app-liste.js"></script>
+  <script src="js/app-avoir.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/menu-music.js"></script>
+  <script src="js/site-music.js"></script>
+</body>
+</html>
