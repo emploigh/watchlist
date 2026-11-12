@@ -1,0 +1,7 @@
+/* Tuiles du dock aux couleurs du logo Watchlist (violet / magenta) */
+.dock-item[data-app="home"]   { background: linear-gradient(145deg, #c04dff, #5b0fa8); }
+.dock-item[data-app="rating"] { background: linear-gradient(145deg, #ffb340, #ff6b2c); }
+.dock-item[data-app="liste"]  { background: linear-gradient(145deg, #a855f7, #3b0764); }
+.dock-item[data-app="avoir"]  { background: linear-gradient(145deg, #e040fb, #7c1fd1); }
+.dock-item[data-app="music"]  { background: linear-gradient(145deg, #ff6fb5, #c2185b); }
+.svg-ico { stroke-width: 1.8; }

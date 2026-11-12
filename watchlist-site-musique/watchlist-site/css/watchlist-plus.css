@@ -1,0 +1,358 @@
+/* =========================================================
+   Extensions Watchlist : étoiles, pastilles, favoris, barre d'outils,
+   histogramme. Même vibe que l'existant : néomorphisme #e0e5ec,
+   violet #a066d2, verre dépoli, Dela Gothic One.
+   ========================================================= */
+.wlapp {
+  --neo: 4px 4px 8px rgba(255, 255, 255, 0.5), -4px -4px 8px rgba(0, 0, 0, 0.2);
+  --neo-in: inset 2px 2px 4px rgba(255, 255, 255, 0.3), inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  --violet: linear-gradient(145deg, #a066d2, #7e3bb2);
+}
+
+/* ---------- Formulaire Rating ---------- */
+.wlapp .wl-rating-box { border-radius: 56px; padding: 26px 26px 22px; }
+.wlapp .wl-form { border-radius: 40px; padding: 18px 22px 8px; display: flex; flex-direction: column; gap: 12px; }
+.wlapp .wl-field { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wlapp .wl-field-col { flex-direction: column; align-items: stretch; gap: 6px; }
+.wlapp .wl-label { width: 92px; flex-shrink: 0; font-size: 12px; opacity: 0.75; }
+.wlapp .wl-label small { display: block; font-size: 9px; opacity: 0.7; }
+.wlapp .wl-field-col .wl-label { width: auto; }
+.wlapp .wl-field-col .wl-label small { display: inline; margin-left: 6px; }
+
+/* Étoiles */
+.wlapp .wl-stars { display: flex; gap: 2px; }
+.wlapp .wl-star {
+  all: unset;
+  box-sizing: border-box;
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  cursor: pointer;
+  color: rgba(60, 60, 80, 0.32);
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s, filter 0.2s;
+}
+.wlapp .wl-star .svg-ico { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; }
+.wlapp .wl-star:hover { transform: translateY(-2px) scale(1.15); }
+.wlapp .wl-star:active { transform: scale(0.92); }
+.wlapp .wl-star:focus-visible { outline: 2px solid #a066d2; outline-offset: 2px; border-radius: 10px; }
+.wlapp .wl-star.on { color: #ff9f43; filter: drop-shadow(0 2px 6px rgba(255, 94, 98, 0.45)); }
+.wlapp .wl-star.on .svg-ico { fill: currentColor; }
+.wlapp .wl-mood { font-size: 11px; min-width: 80px; opacity: 0.8; }
+
+/* Favori (cœur) */
+.wlapp .wl-fav {
+  all: unset;
+  box-sizing: border-box;
+  margin-left: auto;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #8a8f9c;
+  background: #e0e5ec;
+  box-shadow: var(--neo);
+  transition: all 0.25s ease;
+}
+.wlapp .wl-fav .svg-ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.wlapp .wl-fav:hover { transform: translateY(-2px); }
+.wlapp .wl-fav.on { color: #fff; background: linear-gradient(145deg, #ff7eb3, #e0457b); box-shadow: var(--neo-in); }
+.wlapp .wl-fav.on .svg-ico { fill: currentColor; animation: wl-pop 0.35s ease; }
+.wlapp .wl-fav-sm { width: 30px; height: 30px; margin-left: 0; flex-shrink: 0; }
+.wlapp .wl-fav-sm .svg-ico { width: 16px; height: 16px; }
+@keyframes wl-pop { 0% { transform: scale(0.4); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+/* Pastilles (remplacent les menus déroulants natifs) */
+.wlapp .wl-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.wlapp .wl-chip {
+  all: unset;
+  box-sizing: border-box;
+  padding: 8px 14px;
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 12px;
+  color: #333;
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: var(--neo);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.25s ease;
+}
+.wlapp .wl-chip:hover { transform: translateY(-2px); }
+.wlapp .wl-chip:active { transform: translateY(1px); box-shadow: var(--neo-in); }
+.wlapp .wl-chip:focus-visible { outline: 2px solid #a066d2; outline-offset: 2px; }
+.wlapp .wl-chip.on { color: #fff; background: var(--violet); box-shadow: var(--neo-in); transform: none; }
+
+/* Zone de texte */
+.wlapp .wl-note {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  padding: 12px 16px;
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 12px;
+  color: #333;
+  background: #e0e5ec;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.14), inset -3px -3px 7px rgba(255, 255, 255, 0.6);
+  scrollbar-width: none;
+}
+.wlapp .wl-note:focus { box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.14), inset -3px -3px 7px rgba(255, 255, 255, 0.6), 0 0 0 2px rgba(160, 102, 210, 0.6); }
+
+/* Boutons d'action */
+.wlapp .wl-actions { display: flex; justify-content: center; align-items: center; gap: 12px; }
+.wlapp .wl-actions #submit-button { background-color: #e0e5ec; color: #333; width: 160px; }
+.wlapp .wl-actions #submit-button:hover { background-color: #e0e5ec; }
+.wlapp .wl-ghost {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 12px;
+  color: #333;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.wlapp .wl-ghost:hover { background: rgba(255, 255, 255, 0.6); transform: translateY(-2px); }
+.wlapp .wl-ghost:active { transform: translateY(1px); }
+.wlapp .wl-ghost .svg-ico { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- Suggestions ---------- */
+.wlapp #autocomplete-list { padding: 6px; margin: 0; list-style: none; scrollbar-width: none; }
+.wlapp .autocomplete-item { position: relative; margin: 4px 2px; transition: all 0.15s ease; }
+.wlapp .autocomplete-item mark { background: rgba(255, 255, 255, 0.35); color: inherit; border-radius: 4px; padding: 0 2px; }
+.wlapp .autocomplete-item.active { background-color: #d07fda; transform: translateY(-1px); box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.4), -2px -2px 5px rgba(0, 0, 0, 0.3); }
+.wlapp .wl-sug-tag { margin-left: 8px; font-size: 10px; background: rgba(0, 0, 0, 0.25); padding: 2px 7px; border-radius: 10px; }
+
+/* ---------- Barre d'outils (Liste / À voir) ---------- */
+.wlapp .wl-toolbar { display: flex; flex-direction: column; gap: 10px; align-items: center; margin: 4px 0 8px; }
+.wlapp .wl-toolbar .wl-chips { justify-content: center; }
+.wlapp .wl-summary { text-align: center; font-size: 11px; opacity: 0.7; margin: 4px 0 0; min-height: 14px; }
+.wlapp .wl-progress { height: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.12); overflow: hidden; margin: 10px 8px 0; }
+.wlapp .wl-progress-fill { display: block; height: 100%; width: 0; border-radius: 4px; background: var(--violet); transition: width 0.6s ease; }
+
+/* ---------- Cartes de la Liste ---------- */
+.wlapp .rating-header .wl-fav-sm { margin-left: auto; }
+.wlapp .wl-card-stars { display: flex; gap: 1px; margin: 2px 0 6px; }
+.wlapp .wl-cstar { color: rgba(255, 255, 255, 0.45); display: grid; }
+.wlapp .wl-cstar .svg-ico { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+.wlapp .wl-cstar.on { color: #ffd166; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3)); }
+.wlapp .wl-cstar.on .svg-ico { fill: currentColor; }
+.wlapp .wl-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0; }
+.wlapp .wl-badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; color: #fff; background: rgba(255, 255, 255, 0.28); border: 1px solid rgba(255, 255, 255, 0.35); }
+.wlapp .wl-badge.alt { background: rgba(0, 0, 0, 0.22); }
+.wlapp .wl-card-note { font-size: 11px !important; line-height: 1.4; opacity: 0.85; font-style: italic; overflow-wrap: anywhere; }
+.wlapp .rating-entry { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s; animation: wl-in 0.35s ease both; }
+.wlapp .rating-entry:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22); }
+@keyframes wl-in { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+
+/* ---------- À voir ---------- */
+.wlapp .anime-item { animation: wl-in 0.3s ease both; border-radius: 22px; transition: background 0.3s; }
+.wlapp .anime-item .wl-rate { margin: 0; flex-shrink: 0; }
+.wlapp .anime-item.wl-pick { animation: wl-glow 1.8s ease; }
+@keyframes wl-glow {
+  0%, 100% { background: transparent; }
+  15%, 70% { background: rgba(160, 102, 210, 0.35); box-shadow: 0 0 0 2px rgba(160, 102, 210, 0.8); }
+}
+
+/* ---------- Accueil ---------- */
+.wlapp .w-fav { background: linear-gradient(145deg, #ff7eb3, #e0457b); }
+.wlapp .wl-histo {
+  grid-column: 1 / -1;
+  padding: 14px 18px 12px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.wlapp .wl-histo-title { font-size: 11px; opacity: 0.75; }
+.wlapp .wl-histo-bars { display: flex; align-items: flex-end; justify-content: center; gap: 14px; height: 80px; }
+.wlapp .wl-histo-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; width: 36px; height: 100%; }
+.wlapp .wl-histo-col em { font-style: normal; font-size: 10px; opacity: 0.8; }
+.wlapp .wl-histo-col b { font-weight: normal; font-size: 10px; opacity: 0.75; }
+.wlapp .wl-histo-bar { display: block; width: 100%; border-radius: 10px 10px 4px 4px; background: linear-gradient(180deg, #ffb347, #ff5e62); min-height: 6px; transition: height 0.5s ease; }
+.wlapp .wl-histo-col:nth-child(n+4) .wl-histo-bar { background: linear-gradient(180deg, #c58bff, #7e3bb2); }
+.wlapp .wl-histo-top { font-size: 11px; text-align: center; opacity: 0.8; }
+
+/* ---------- Mode sombre ---------- */
+body.dark .wlapp .wl-chip,
+body.dark .wlapp .wl-fav:not(.on) { background: #2c2c30; color: #e6e6ea; box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5), -3px -3px 7px rgba(255, 255, 255, 0.05); }
+body.dark .wlapp .wl-chip.on { color: #fff; background: var(--violet); box-shadow: var(--neo-in); }
+body.dark .wlapp .wl-fav.on { color: #fff; }
+body.dark .wlapp .wl-note { background: #2c2c30; color: #f2f2f7; box-shadow: inset 3px 3px 7px rgba(0, 0, 0, 0.5), inset -3px -3px 7px rgba(255, 255, 255, 0.04); }
+body.dark .wlapp .wl-ghost { color: #f2f2f7; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.14); }
+body.dark .wlapp .wl-ghost:hover { background: rgba(255, 255, 255, 0.16); }
+body.dark .wlapp .wl-star { color: rgba(255, 255, 255, 0.28); }
+body.dark .wlapp .wl-star.on { color: #ff9f43; }
+body.dark .wlapp .wl-actions #submit-button { background-color: #2c2c30; color: #f2f2f7; }
+body.dark .wlapp .wl-histo { background: rgba(24, 24, 28, 0.5); border-color: rgba(255, 255, 255, 0.1); }
+body.dark .wlapp .wl-progress { background: rgba(255, 255, 255, 0.12); }
+body.dark .wlapp .wl-note::placeholder { color: #8a8a92; }
+
+@media (max-width: 520px) {
+  .wlapp .wl-label { width: 100%; }
+  .wlapp .wl-fav { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wlapp * { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Liste / À voir : la barre de recherche ne bouge plus ---------- */
+/* Le bloc était centré verticalement : quand il rétrécissait (aucun résultat), il descendait.
+   On l'ancre en haut ; la liste a une hauteur minimale pour éviter tout saut. */
+.wlapp.wl-liste .wl-scroll > :first-child,
+.wlapp.wl-avoir .wl-scroll > :first-child { margin-top: 0; }
+.wlapp.wl-liste #ratings-list { min-height: 260px; align-content: start; }
+.wlapp.wl-avoir .anime-list { min-height: 220px; }
+
+/* =========================================================
+   Passe de finition : animations, vue compacte, épingles,
+   barre de visionnage, dernières critiques, toast « Annuler »
+   ========================================================= */
+
+/* Apparition en cascade des cartes et des lignes */
+.wlapp .rating-entry:nth-child(1), .wlapp .anime-item:nth-child(1) { animation-delay: 0s; }
+.wlapp .rating-entry:nth-child(2), .wlapp .anime-item:nth-child(2) { animation-delay: 0.04s; }
+.wlapp .rating-entry:nth-child(3), .wlapp .anime-item:nth-child(3) { animation-delay: 0.08s; }
+.wlapp .rating-entry:nth-child(4), .wlapp .anime-item:nth-child(4) { animation-delay: 0.12s; }
+.wlapp .rating-entry:nth-child(5), .wlapp .anime-item:nth-child(5) { animation-delay: 0.16s; }
+.wlapp .rating-entry:nth-child(n+6), .wlapp .anime-item:nth-child(n+6) { animation-delay: 0.2s; }
+
+/* Accueil : posters qui se soulèvent, widgets plus vivants */
+.wlapp .poster-button { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s, filter 0.35s; }
+.wlapp .poster-button:hover { transform: translateY(-6px) scale(1.04) rotate(-0.6deg); filter: saturate(1.15) brightness(1.05); box-shadow: 0 18px 34px rgba(0, 0, 0, 0.3); }
+.wlapp .poster-button:active { transform: scale(0.97); }
+.wlapp .poster-button:focus-visible, .wlapp .wl-widget:focus-visible { outline: 3px solid #a066d2; outline-offset: 3px; }
+.wlapp .wl-widget { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s; animation: wl-in 0.4s ease both; }
+.wlapp .wl-widget:hover { transform: translateY(-4px) scale(1.02); }
+.wlapp .wl-hello { text-align: center; font-size: 13px; margin: 14px 8px 4px; opacity: 0.85; animation: wl-in 0.5s ease both; }
+
+/* Barre de visionnage empilée */
+.wlapp .wl-stagebar { display: flex; height: 14px; border-radius: 8px; overflow: hidden; gap: 2px; background: rgba(0, 0, 0, 0.1); }
+.wlapp .wl-seg { min-width: 6px; transition: flex-grow 0.5s ease; }
+.wlapp .s0 { background: linear-gradient(90deg, #ff9a9e, #ff5e62); }
+.wlapp .s1 { background: linear-gradient(90deg, #7ee8a2, #188e4d); }
+.wlapp .s2 { background: linear-gradient(90deg, #ffd43b, #f08c00); }
+.wlapp .s3 { background: linear-gradient(90deg, #a1a1a6, #636366); }
+.wlapp .wl-stagelegend { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; font-size: 10px; opacity: 0.85; }
+.wlapp .wl-leg { display: inline-flex; align-items: center; gap: 5px; }
+.wlapp .wl-leg i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+/* Dernières critiques */
+.wlapp .wl-recent-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.wlapp .wl-recent-item {
+  all: unset; box-sizing: border-box; cursor: pointer;
+  display: flex; flex-direction: column; gap: 3px; padding: 9px 12px; border-radius: 16px;
+  background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.5);
+  font-family: 'Dela Gothic One', sans-serif; font-size: 11px; color: #333;
+  transition: transform 0.2s, background 0.2s;
+}
+.wlapp .wl-recent-item:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.65); }
+.wlapp .wl-recent-item:focus-visible { outline: 2px solid #a066d2; }
+.wlapp .wl-recent-item b { font-weight: normal; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wlapp .wl-recent-item em { font-style: normal; color: #f08c00; letter-spacing: 1px; font-size: 11px; }
+
+/* Liste : vue compacte (une ligne par critique) */
+.wlapp #ratings-list.wl-compact { grid-template-columns: 1fr; gap: 8px; }
+.wlapp #ratings-list.wl-compact .rating-entry { min-height: 0; border-radius: 22px; padding: 8px 16px; }
+.wlapp #ratings-list.wl-compact .rating-content { flex-direction: row; align-items: center; gap: 14px; height: auto; }
+.wlapp #ratings-list.wl-compact .rating-header { margin: 0; flex: 1; min-width: 0; }
+.wlapp #ratings-list.wl-compact .rating-header .logo-image { width: 26px !important; flex-shrink: 0; }
+.wlapp #ratings-list.wl-compact .anime-title { font-size: 13px !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wlapp #ratings-list.wl-compact .rating-details { display: flex; align-items: center; gap: 10px; }
+.wlapp #ratings-list.wl-compact .wl-card-stars { margin: 0; }
+.wlapp #ratings-list.wl-compact .wl-cstar .svg-ico { width: 14px; height: 14px; }
+.wlapp #ratings-list.wl-compact .wl-badges, .wlapp #ratings-list.wl-compact .wl-card-note { display: none; }
+.wlapp #ratings-list.wl-compact .rating-footer { margin: 0; gap: 6px; }
+.wlapp .wl-backup { margin-top: 10px; }
+
+/* À voir : épingle */
+.wlapp .wl-pin {
+  all: unset; box-sizing: border-box; width: 30px; height: 30px; flex-shrink: 0;
+  display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+  color: rgba(60, 60, 80, 0.45); transition: transform 0.2s, color 0.2s, background 0.2s;
+}
+.wlapp .wl-pin .svg-ico { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.wlapp .wl-pin:hover { background: rgba(255, 255, 255, 0.45); transform: rotate(-12deg) scale(1.1); }
+.wlapp .wl-pin.on { color: #a066d2; }
+.wlapp .wl-pin.on .svg-ico { fill: currentColor; }
+.wlapp .wl-pin:focus-visible { outline: 2px solid #a066d2; }
+
+/* Cartes : cœur qui « pop » */
+.wlapp .wl-fav.on .svg-ico { animation: wl-pop 0.35s cubic-bezier(0.2, 1.6, 0.4, 1); }
+@keyframes wl-pop { 0% { transform: scale(0.6); } 100% { transform: scale(1); } }
+
+/* Message d'état vide plus doux */
+.wlapp .wl-empty { text-align: center; opacity: 0.7; padding: 36px 12px; grid-column: 1 / -1; font-size: 13px; }
+
+/* Toast avec bouton « Annuler » */
+.toast.toast-undo { display: flex; align-items: center; gap: 14px; pointer-events: auto; }
+.toast.toast-undo button {
+  all: unset; cursor: pointer; font-weight: 600; padding: 3px 10px; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.22); transition: background 0.2s;
+}
+.toast.toast-undo button:hover { background: rgba(255, 255, 255, 0.4); }
+
+/* Barres de défilement discrètes */
+.wlapp .wl-scroll { scrollbar-width: thin; scrollbar-color: rgba(160, 102, 210, 0.55) transparent; }
+.wlapp .wl-scroll::-webkit-scrollbar { width: 8px; }
+.wlapp .wl-scroll::-webkit-scrollbar-thumb { background: rgba(160, 102, 210, 0.55); border-radius: 8px; }
+
+/* Mode sombre */
+body.dark .wlapp .wl-recent-item { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.12); color: #f2f2f7; }
+body.dark .wlapp .wl-recent-item:hover { background: rgba(255, 255, 255, 0.14); }
+body.dark .wlapp .wl-pin { color: rgba(255, 255, 255, 0.4); }
+body.dark .wlapp .wl-pin.on { color: #c58bff; }
+body.dark .wlapp .wl-stagebar { background: rgba(255, 255, 255, 0.1); }
+
+/* Épingle lisible sur les lignes vertes de « À voir » */
+.wlapp .anime-item .wl-pin { color: rgba(255, 255, 255, 0.6); }
+.wlapp .anime-item .wl-pin .svg-ico { width: 18px; height: 18px; }
+.wlapp .anime-item .wl-pin.on { color: #fff; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35)); }
+body.dark .wlapp .anime-item .wl-pin.on { color: #fff; }
+
+/* =========================================================
+   Rating : bandeau d'état, récents, raccourcis, étincelles
+   ========================================================= */
+.wlapp .wl-status {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin: 10px 4px 0; padding: 8px 14px; border-radius: 20px; font-size: 12px;
+  background: rgba(255, 255, 255, 0.35); border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: wl-in 0.3s ease both;
+}
+.wlapp .wl-status[hidden], .wlapp .wl-recents[hidden] { display: none; }
+.wlapp .wl-status[data-kind="edit"] { background: rgba(255, 179, 71, 0.35); }
+.wlapp .wl-status[data-kind="todo"] { background: rgba(126, 232, 162, 0.35); }
+.wlapp .wl-status[data-kind="new"] { background: rgba(160, 102, 210, 0.25); }
+.wlapp .wl-status-text { flex: 1; min-width: 140px; text-align: center; }
+.wlapp .wl-status .wl-ghost { padding: 5px 12px; font-size: 11px; }
+.wlapp .wl-recents { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; margin: 12px 4px 0; }
+.wlapp .wl-recents-label { font-size: 11px; opacity: 0.65; }
+.wlapp .wl-keys { margin: 4px 0 6px; font-size: 10px; opacity: 0.6; text-align: center; }
+.wlapp .wl-keys kbd {
+  font-family: inherit; font-size: 10px; padding: 1px 6px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.45); border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.wlapp .wl-rating-box { position: relative; overflow: hidden; }
+.wlapp .wl-spark {
+  position: absolute; pointer-events: none; font-style: normal; font-size: 18px; color: #ffd166;
+  text-shadow: 0 0 8px rgba(255, 159, 67, 0.9); animation: wl-spark 1s ease-out forwards; z-index: 5;
+}
+@keyframes wl-spark {
+  0% { transform: translate(0, 0) scale(0.4); opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) scale(1.3) rotate(180deg); opacity: 0; }
+}
+body.dark .wlapp .wl-status { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.12); }
+body.dark .wlapp .wl-status[data-kind="edit"] { background: rgba(255, 159, 67, 0.2); }
+body.dark .wlapp .wl-status[data-kind="todo"] { background: rgba(24, 142, 77, 0.3); }
+body.dark .wlapp .wl-status[data-kind="new"] { background: rgba(160, 102, 210, 0.25); }
+body.dark .wlapp .wl-keys kbd { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.18); }
+
+/* Aide clavier lisible sur le fond orange de Rating */
+.wlapp .wl-keys { opacity: 0.95; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
+.wlapp .wl-keys kbd { background: rgba(0, 0, 0, 0.22); border-color: rgba(255, 255, 255, 0.35); color: #fff; }

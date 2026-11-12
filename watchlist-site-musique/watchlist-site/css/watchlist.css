@@ -1,0 +1,1934 @@
+/* =========================================================
+   CSS de la Watchlist d'origine (styles.css), repris tel quel.
+   Seule différence : chaque règle est limitée aux applications .wlapp,
+   pour ne pas toucher à l'interface macOS. Les commentaires sont retirés.
+   ========================================================= */
+.wlapp {
+  margin: 0;
+  padding: 0;
+  font-family:'Dela Gothic One', sans-serif; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100vh;
+  
+}
+.wlapp .content {
+  margin-left: 30px; 
+  padding: 20px;
+}
+.wlapp .home-link {
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp .long-button {
+  width: 300px;
+  padding: 20px 0; 
+  font-size: 17px; 
+  color: #333; 
+  background-color: #e0e5ec; 
+    border: none;
+  border-radius: 40px; 
+  
+  cursor: pointer;
+  transition: all 0.3s ease; 
+  margin: 10px 0; 
+  font-family: 'Dela Gothic One', sans-serif; 
+
+}
+.wlapp .long-button:hover {
+  background-color: #188e4d;
+  transform: translateY(-4px);
+
+}
+.wlapp .long-button:active {
+  transform: translateY(2px);
+
+}
+.wlapp .button-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.wlapp input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.wlapp h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.wlapp #search-form {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  position: relative; 
+}
+.wlapp #search-input {
+  width: 300px;
+  font-family: 'Dela Gothic One', sans-serif; 
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+  outline: none;
+  margin-right: 10px;
+}
+.wlapp #autocomplete-list {
+  position: absolute;
+    overflow-y: auto;
+  z-index: 1;
+
+  right: 20px; 
+  width: 250px;
+  max-height: 150px;
+  background-color: #e0e5ec; 
+  border: none;
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  padding: 5px 0;
+  font-family: 'Dela Gothic One', sans-serif; 
+  margin-top: 60px;
+}
+.wlapp .autocomplete-item {
+  padding: 10px;
+  cursor: pointer;
+  background-color: rgba(142, 61, 156, 0.7);
+  border-radius: 15px;
+  margin: 5px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+}
+.wlapp .autocomplete-item:hover {
+  background-color: #d07fda;
+  box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.4), 
+              -2px -2px 5px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+.wlapp .autocomplete-item:active {
+  background-color: #b667c2;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp .select-container {
+  display: flex;
+  align-items: center;
+}
+.wlapp select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+.wlapp #submit-button {
+  width: 150px;
+  padding: 10px 0; 
+  font-size: 14px; 
+  color: #333;
+  background-color: #e0e5ec; 
+  border: none; 
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer; 
+  transition: all 0.3s ease;
+  margin: 10px 0;
+}
+.wlapp #submit-button:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3); 
+  transform: translateY(-2px); 
+}
+.wlapp #submit-button:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp .home-link {
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp .popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  border-radius: 100px;
+  opacity: 0;  
+  transform: translate(-50%, -50%) scale(0);
+  transition: opacity 0.3s ease, transform 0.3s ease; 
+}
+.wlapp .popup.show {
+  display: block;
+  opacity: 1; 
+  transform: translate(-50%, -50%) scale(1); 
+  animation: popUpAnimation 0.5s ease-out forwards; 
+}
+@keyframes popUpAnimation {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0); 
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1); 
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.wlapp .upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.wlapp .btn {
+  border: 2px solid gray;
+  background-color: white;
+  color: gray;
+  border-radius: 8px;
+  padding: 8px 20px;
+  margin: 8px 0;
+}
+.wlapp .upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.wlapp .fruit-btn {
+  border: 2px solid green;
+  background-color: limegreen;
+  color: white;
+}
+.wlapp .dela-gothic-text {
+  font-family: 'Dela Gothic One', sans-serif; 
+  font-weight: normal;
+}
+.wlapp .upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.wlapp .btn {
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+font-size: 14px;
+cursor: pointer;
+margin-left: 10px;
+background-color: #82188e;
+font-weight: bold;
+ color: white;
+}
+.wlapp .btn:hover {
+background-color: #188e4d;
+}
+.wlapp .upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.wlapp .fruit-btn {
+  width: 300px;
+  padding: 20px 0; 
+  font-size: 17px; 
+  color: #333; 
+  background-color: #e0e5ec; 
+  border: none;
+    box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  border-radius: 40px; 
+  cursor: pointer;
+  transition: all 0.3s ease; 
+  margin: 0px 0; 
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp .fruit-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+.wlapp .fruit-btn:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.wlapp #volume-wrapper {
+  width: 100%;
+  max-width: 300px;
+  padding: 15px;
+  margin: 20px auto;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.2),
+              -8px -8px 16px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  color: #fff;
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp #volume-control {
+  width: 150px;
+  height: 8px; 
+  margin-top: 10px;
+  background: linear-gradient(to right, #8B008B, #FF00FF);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+.wlapp #volume-control::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+.wlapp #volume-control::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+.wlapp .new-bar::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; 
+}
+.wlapp .new-bar {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.wlapp .new-bar {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  top: 10px;  
+  width: 183px;
+  height: 40%; 
+  background-color: #333;
+  overflow-y: auto;
+  border-top-left-radius: 65px;
+  border-bottom-left-radius: 65px;
+  border-top-right-radius: 65px;
+  border-bottom-right-radius: 65px;
+  margin-left: 9px; 
+  padding: 7.9px;
+  overflow-x: hidden;
+  transform: translateX(-120%); 
+  transition: transform 0.2s ease-in-out;
+}
+.wlapp .new-bar:hover {
+  width: 183px;
+}
+.wlapp .new-bar-content {
+  padding: 20px;
+  color: #fff;
+}
+.wlapp .new-bar ul {
+  list-style: none;
+  padding: 0;
+}
+.wlapp .new-bar ul li {
+  margin-bottom: 15px;
+}
+.wlapp .new-bar.slide-in {
+  transform: translateX(0);
+}
+.wlapp .new-bar-content {
+  padding: 20px;
+  color: #fff;
+}
+.wlapp .new-bar ul {
+  list-style: none;
+  padding: 0;
+  text-align: left; 
+}
+.wlapp .new-bar ul li {
+  margin-bottom: 15px;
+  display: block;
+  transition: 0.2s;
+}
+.wlapp .new-bar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+}
+.wlapp .new-bar ul li a:hover {
+  background-color: #555;
+}
+@font-face {
+  font-family: 'Dela Gothic One';
+  src: url('../fonts/DelaGothicOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.wlapp .compact-sidebar {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.25),
+    -8px -8px 16px rgba(255, 255, 255, 0.05),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.1),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10000;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.wlapp .compact-sidebar a {
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  padding: 10px;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+.wlapp .compact-sidebar a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+@media (max-width: 1009px) {
+.wlapp .sidebar {
+    display: none;
+  }
+.wlapp .compact-sidebar {
+    display: flex;
+  }
+.wlapp .content {
+    margin-left: 0;
+    margin-bottom: 90px; 
+  }
+}
+.wlapp #add-song {
+    width: 90%;
+  padding: 10px;
+  font-size: 14px;
+
+  padding: 10px 0;
+  font-size: 14px;
+  color: #fff;
+  background-color: #4CAF50; 
+  border: none;
+  border-radius: 20px;
+  box-shadow: 4px 4px 8px rgba(76, 175, 80, 0.5),
+              -4px -4px 8px rgba(0, 100, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp #add-song:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+.wlapp #add-song:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp .homepara input[type="text"],
+.wlapp .homepara input[type="file"] {
+  width: 90%;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  background-color: #e0e5ec;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5),
+              -4px -4px 8px rgba(0, 0, 0, 0.2);
+  margin: 10px 0;
+  font-family: 'Dela Gothic One', sans-serif;
+  transition: all 0.3s ease;
+}
+.wlapp .homepara input[type="text"]:focus,
+.wlapp .homepara input[type="file"]:focus {
+  outline: none;
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4),
+              -4px -4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+.wlapp .homepara input:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp .custom-file-button {
+  width: 90%;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 4px 4px 8px rgba(76, 175, 80, 0.5),
+              -4px -4px 8px rgba(0, 100, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+  font-family: 'Dela Gothic One', sans-serif;
+  display: inline-block; 
+  text-align: center;     
+  user-select: none;
+}
+.wlapp .custom-file-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+.wlapp .custom-file-button:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp .modern-button {
+  width: 150px;
+  padding: 10px 0; 
+  font-size: 14px; 
+  color: #333; 
+  background-color: #e0e5ec; 
+  border: none;
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer;
+  transition: all 0.3s ease; 
+  margin: 10px 0; 
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp .modern-button span {
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp .modern-button:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3); 
+  transform: translateY(-2px); 
+}
+.wlapp .modern-button:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2); 
+  transform: translateY(1px);
+}
+.wlapp .anime-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+.wlapp .anime-button:hover {
+  background-color: #464646;
+}
+.wlapp .anime-list {
+  list-style: none;
+  padding: 0;
+}
+.wlapp .anime-item {
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wlapp .anime-name {
+  flex: 1;
+  margin-right: 10px;
+}
+.wlapp .anime-list {
+  list-style: none;
+  padding: 0;
+}
+.wlapp .anime-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.wlapp .circle {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  margin-right: 0.6em;
+  cursor: pointer;
+  background: #e0e0e0;
+
+  transition: 
+    background 0.6s ease,
+    box-shadow 0.6s ease,
+    transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.wlapp .circle:hover {
+  transform: scale(1.1);
+}
+.wlapp .circle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #a066d2, #7e3bb2);
+  box-shadow:
+    inset 0.2em 0.2em 0.4em rgba(255, 255, 255, 0.15),
+    inset -0.2em -0.2em 0.4em rgba(0, 0, 0, 0.25);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  z-index: 1;
+}
+.wlapp .circle.completed {
+  background: #a066d2;
+  box-shadow:
+    inset 0.2em 0.2em 0.4em rgba(0, 0, 0, 0.2),
+    inset -0.2em -0.2em 0.4em rgba(255, 255, 255, 0.1);
+}
+.wlapp .circle.completed::after {
+  transform: translateX(0);
+}
+.wlapp .delete-btn {
+  width: 150px;
+  padding: 10px 0;
+  font-size: 14px; 
+  color: #333;
+  background-color: #e0e5ec;
+  border: none; 
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  margin: 10px 0; 
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp .delete-btn span {
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp .delete-btn:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3); 
+  transform: translateY(-2px); 
+}
+.wlapp .delete-btn:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2); 
+  transform: translateY(1px); 
+}
+.wlapp .name {
+  margin-left: 10px; 
+}
+.wlapp #anime-input {
+  border: none; 
+  font-family: 'Dela Gothic One', sans-serif; 
+  outline: none; 
+}
+.wlapp #banane-form {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+.wlapp #banane-input {
+  width: 300px;
+  font-family: 'Dela Gothic One', sans-serif; 
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+  outline: none;
+  margin-right: 10px;
+}
+.wlapp .icon-button {
+  width: 80px; 
+  height: 80px; 
+  cursor: pointer; 
+}
+.wlapp .hidden {
+  transform: translateX(-130%);
+}
+.wlapp .sidebar {
+
+  animation: fadeIn 0.15s ease-out;
+}
+.wlapp .sidebar:hover {
+
+  animation: fadeIn 0.15s ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.wlapp .sidebar {
+  position: fixed;
+  left: 0;
+  top: 10px; 
+  width: 183px;
+  height: 94.5%; 
+  background-color: #333;
+  overflow-y: auto;
+  transition: 0.3s;
+  border-top-right-radius: 75px;
+  border-bottom-right-radius: 75px;
+  border-top-left-radius: 75px;
+  border-bottom-left-radius: 75px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 9px; 
+  padding: 7.9px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.wlapp .sidebar:hover {
+  width: 183px;
+}
+.wlapp .sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  padding: 10px;
+  border-radius: 20px;
+
+  transition: background 0.2s, transform 0.1s;
+}
+.wlapp .sidebar ul li a:hover {
+  background: rgba(240, 240, 240, 0.6);
+  transform: scale(1.03);
+
+  color: #fffbfb;
+}
+.wlapp .sidebar-content {
+  padding: 20px;
+  color: #fff;
+}
+.wlapp .sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.wlapp .sidebar ul li {
+  margin-bottom: 15px;
+}
+.wlapp .sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  padding: 10px;
+  border-radius: 20px;
+  transition: 0.2s;
+}
+.wlapp .sidebar ul li a:hover {
+  background-color: #555;
+}
+.wlapp .sidebar ul li a.active {
+  background-color: white;
+  color: #333;
+}
+.wlapp .content {
+  margin-left: 250px;
+  padding: 20px;
+}
+@media (max-width: 1008px) {
+.wlapp .sidebar {
+    display: none;
+  }
+.wlapp .content {
+    margin-left: 0;
+  }
+}
+.wlapp .sidebar {
+  user-select: none;       
+  -webkit-user-drag: none; 
+  pointer-events: auto;    
+}
+.wlapp .sidebar * {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.wlapp * {
+  user-select: none;       
+  -webkit-user-drag: none;  
+}
+.wlapp .fromage-container {
+  margin-left: 2px;
+  margin-right: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border-radius: 55px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 42vh;
+  margin-top: auto;
+  margin-bottom: 10px; 
+  overflow: hidden;
+  transition: background-image 0.3s ease-in-out;
+  padding: 20px;
+}
+@media (max-height: 600px) {
+.wlapp .fromage-container {
+    height: 30vh; 
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+.wlapp #album-cover,
+.wlapp #artist,
+.wlapp .cuisi-button {
+    display: none;
+  }
+.wlapp #song-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    display: block;
+  }
+.wlapp .fromage-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0px;
+  }
+.wlapp .fromage-control-button {
+    width: 30px;
+    height: 30px;
+  }
+}
+.wlapp .fromage-container::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 17px;
+  border: 2px solid #333;
+  z-index: -1;
+}
+.wlapp .fromage-container img {
+  width: 50px;
+  height: 50px;
+  border-radius: 20%;
+  object-fit: cover;
+}
+.wlapp .fromage-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0px;
+}
+.wlapp .fromage-control-button {
+  width: 30px;
+  height: 30px; 
+  cursor: pointer;
+}
+.wlapp .fromage-control-button img {
+  width: 30px; 
+  height: 30px;
+}
+.wlapp .fromage-control-button:focus {
+  outline: none;
+}
+.wlapp audio {
+  display: none;
+}
+.wlapp #volume-slider {
+  width: 150px;
+  height: 8px; 
+  margin-top: 10px;
+  background: linear-gradient(to right, #8B008B, #FF00FF);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+.wlapp #volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; 
+  height: 15px; 
+  border-radius: 50%;
+  background: #8B008B;
+  cursor: pointer;
+}
+.wlapp #volume-slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border: none;
+  border-radius: 50%;
+  background: #8B008B;
+  cursor: pointer;
+}
+.wlapp .icon-container {
+  width: 60px; 
+  height: 60px;
+  border-radius: 15px;
+  overflow: hidden; 
+  display: inline-block; 
+  margin-right: 10px; 
+}
+.wlapp .icon-container img {
+  width: 60px; 
+  height: 60px; 
+}
+.wlapp .music-button {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  border: none;
+  border-radius: 40px;
+  margin: 5px 0;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.wlapp .music-button:hover {
+  background-color: #555;
+}
+.wlapp .music-button img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+.wlapp .music-button:hover img {
+  filter: brightness(1.2); 
+}
+.wlapp .music-button p {
+  color: #fff;
+  font-size: 14px;
+}
+.wlapp #toggle-bar {
+  background: none;
+  border: none;
+  border-radius: 0 !important;
+  left: 40px; 
+}
+.wlapp #toggle-bar img {
+  width: 18px;
+  height: 18px;
+  border-radius: 0;
+}
+.wlapp #rating-select {
+  width: 100px; 
+  padding: 10px 0; 
+  font-size: 14px;
+  color: #333;
+  background-color: #e0e5ec;
+  border: none;
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp #rating-select:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+.wlapp #rating-select:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp .form-row {
+  display: flex;
+  gap: 10px; 
+  flex-wrap: wrap; 
+  align-items: center;
+}
+.wlapp .custom-select,
+.wlapp #submit-button {
+  flex-shrink: 0; 
+}
+.wlapp #rating-select option {
+  font-size: 14px;
+  background-color: #f5f5f5;
+}
+.wlapp #rating-select option {
+  background-color: #e0e5ec;
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif;
+  padding: 10px;
+  border: none;
+}
+.wlapp #judgment-select {
+  width: 110px; 
+  padding: 10px 0; 
+  font-size: 14px;
+  color: #333;
+  background-color: #e0e5ec; 
+  border: none;
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp #judgment-select:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+.wlapp #judgment-select:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp #judgment-select option {
+  font-size: 14px;
+  background-color: #f5f5f5;
+}
+.wlapp #judgment-select option {
+  background-color: #e0e5ec;
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif;
+  padding: 10px;
+  border: none;
+}
+.wlapp #stage-select {
+  width: 150px;
+  padding: 10px 0; 
+  font-size: 14px;
+  color: #333;
+  background-color: #e0e5ec; 
+  border: none;
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp #stage-select:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+.wlapp #stage-select:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp #stage-select option {
+  font-size: 14px;
+  background-color: #f5f5f5;
+}
+.wlapp #stage-select option {
+  background-color: #e0e5ec;
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif;
+  padding: 10px;
+  border: none;
+}
+.wlapp #ratings-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); 
+  gap: 20px;
+  padding: 0;
+  margin-top: 20px;
+}
+.wlapp .rating-entry {
+  background: linear-gradient(to bottom, #b5aaaa, rgba(142, 61, 156, 0.7)); 
+  border-radius: 36px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px; 
+}
+.wlapp .rating-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.wlapp .rating-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.wlapp .anime-title {
+  font-size: 18px;
+  word-break: break-word;
+  flex: 1;
+}
+.wlapp .rating-details p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #000;
+}
+.wlapp .rating-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+.wlapp .options {
+  position: absolute;
+    overflow-y: auto;
+  z-index: 1;
+  top: 110%; 
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  display: none; 
+  flex-direction: column;
+ 
+}
+.wlapp .option {
+  padding: 12px 16px;
+
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.wlapp .option:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.wlapp .rating-entry button.delete-button {
+  width: 150px; 
+  padding: 10px 0; 
+  font-size: 14px; 
+  color: #333;
+  background-color: #ece0e0;
+  border: none;
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  margin: 10px 0; 
+  font-family: 'Dela Gothic One', sans-serif;
+    font-weight: bold;  
+
+}
+.wlapp .rating-entry button.delete-button:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3); 
+  transform: translateY(-2px);
+}
+.wlapp .rating-entry button.delete-button:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2); 
+  transform: translateY(1px);
+}
+.wlapp #new-anime {
+  width: 250px;
+  padding: 6px;
+  border: 1px solid rgba(142, 61, 156, 0.7); 
+  border-radius: 5px;
+  font-size: 16px;
+  color: #000; 
+}
+.wlapp #submit-button:hover {
+  background: linear-gradient(to right, #d11ece, #ffffff); 
+}
+.wlapp #reset-button {
+  width: 150px; 
+  padding: 10px 0; 
+  font-size: 14px; 
+  color: #333; 
+  background-color: #e0e5ec; 
+  border: none; 
+  border-radius: 20px;
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  margin: 10px 0; 
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp #reset-button span {
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp #reset-button:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3); 
+  transform: translateY(-2px); 
+}
+.wlapp #reset-button:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2); 
+  transform: translateY(1px); 
+}
+.wlapp .button-container {
+  margin-top: 20px;
+}
+.wlapp #cancelButton {
+  background: #ccc;
+}
+.wlapp .newcontainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 55px;
+
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    inset 8px 8px 15px rgba(255, 255, 255, 0.5),
+    inset -8px -8px 15px rgba(0, 0, 0, 0.05);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.4); 
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif; 
+  user-select: none;
+}
+.wlapp #custom-context-menu {
+  position: absolute;
+  display: none;
+  padding:10px;
+  border:1px solid #ccc; padding:10px;
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1),
+              inset 8px 8px 15px rgba(255,255,255,0.5),
+              inset -8px -8px 15px rgba(0,0,0,0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: 'Dela Gothic One', sans-serif;
+  animation: fadeIn 0.15s ease-out;
+  padding: 10px 0;
+  user-select: none;
+  z-index: 100000;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.wlapp #custom-context-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.wlapp #custom-context-menu ul li {
+  padding: 12px 20px;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+  transition: background 0.2s, transform 0.1s;
+  border-radius: 20px;
+  margin: 4px 10px;
+}
+.wlapp #custom-context-menu ul li:hover {
+  background: rgba(240, 240, 240, 0.6);
+  transform: scale(1.03);
+  box-shadow: inset 2px 2px 4px rgba(255,255,255,0.4),
+              inset -2px -2px 4px rgba(0,0,0,0.05);
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.wlapp .container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 100px;
+
+  box-shadow:
+    10px 10px 30px rgba(0, 0, 0, 0.15),
+    -10px -10px 30px rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  color: #000;
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp .Scrollcontainer {
+  width: min(50vw, 600px);    
+  height: auto;                
+  max-height: 50vh;           
+  overflow-y: auto;
+  margin: 0 auto;
+  padding: 2em;
+
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 100px;
+
+  box-shadow:
+    10px 10px 30px rgba(0, 0, 0, 0.15),
+    -10px -10px 30px rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  color: #000;
+  font-family: 'Dela Gothic One', sans-serif;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.wlapp .Scrollcontainer::-webkit-scrollbar {
+  display: none;
+}
+.wlapp .HOMEcontainer {
+  width: fit-content; 
+  max-width: 90%; 
+  padding: 30px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    10px 10px 30px rgba(0, 0, 0, 0.15),
+    -10px -10px 30px rgba(255, 255, 255, 0.05);
+
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif;
+  text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  overflow: hidden;
+}
+.wlapp .watchlist li {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 30px 10px 0;
+  position: relative;
+}
+.wlapp .inner-wrapper {
+  display: flex;
+  justify-content: center;
+align-items: stretch;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: nowrap;
+}
+.wlapp .upload-btn-wrapper button {
+  font-weight: bold;
+}
+.wlapp .glass-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  max-width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 55px;
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    inset 8px 8px 15px rgba(255, 255, 255, 0.5),
+    inset -8px -8px 15px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-family: 'Dela Gothic One', sans-serif;
+  user-select: none;
+}
+.wlapp .poster-container {
+  display: flex;
+  justify-content: center;
+}
+.wlapp .button-group {
+  display: flex;
+  flex-direction: column;
+
+  align-items: stretch;
+}
+.wlapp .button-group > * {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 800px) {
+.wlapp .inner-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+.wlapp .menu-bar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wlapp .menu-bar li {
+  margin: 0 10px;
+  display: inline;
+}
+.wlapp .menu-bar a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+.wlapp .menu-bar a:hover {
+  background-color: #5e5c5c;
+}
+.wlapp .home-link {
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp ::-webkit-scrollbar {
+  width: 10px; 
+}
+.wlapp ::-webkit-scrollbar-thumb {
+  background-color: #000000; 
+  border-radius: 5px; 
+}
+.wlapp ::-webkit-scrollbar::after {
+  content: "";
+  display: block;
+  width: 10px;
+  background-color: transparent; 
+}
+.wlapp ::-webkit-scrollbar {
+  width: 10px; 
+}
+.wlapp ::-webkit-scrollbar-thumb {
+  background-color: #000000; 
+  border-radius: 5px; 
+}
+.wlapp ::-webkit-scrollbar::after {
+  content: "";
+  display: block;
+  width: 10px;
+  background-color: transparent; 
+}
+.wlapp .dela-gothic-text {
+  font-family: 'Dela Gothic One', cursive;
+}
+.wlapp .button-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+.wlapp .overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.wlapp .poster-button {
+  background-size: cover;
+  background-position: center;
+  width: 150px;
+  height: 200px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  border-radius: 30px;
+  margin: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+  filter: brightness(1);
+}
+.wlapp .poster-button:hover {
+  transform: scale(1.08) rotateZ(-0.5deg);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.1) saturate(1.1);
+}
+.wlapp .button-container button {
+  width: 150px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #333;
+  background-color: #e0e5ec;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5),
+              -4px -4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px;
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp .button-container button:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4),
+              -4px -4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+.wlapp .button-container button:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+.wlapp .popcorn {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  border-radius: 100px;
+
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-shadow:
+    10px 10px 30px rgba(0, 0, 0, 0.15),
+    -10px -10px 30px rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.wlapp .popcorn {
+  overflow-y: scroll; 
+  
+
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.wlapp .popcorn::-webkit-scrollbar {
+  display: none; /
+}
+.wlapp .popcorn.show {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1); 
+  animation: pop-up 0.5s ease-out; 
+
+}
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0); 
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1); 
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); 
+  }
+}
+.wlapp .custom-select-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.wlapp .custom-select {
+  position: relative;
+  width: 200px;
+  background-color: #e0e5ec;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Dela Gothic One', sans-serif;
+}
+.wlapp .custom-select-trigger {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+.wlapp .custom-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #e0e5ec;
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.wlapp .custom-option {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+.wlapp .custom-option:hover {
+  background-color: #d1d7e3;
+}
+.wlapp .custom-select.open .custom-options {
+  display: block;
+}
+.wlapp #submit-button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Dela Gothic One', sans-serif;
+  transition: background-color 0.3s ease;
+}
+.wlapp #submit-button:hover {
+  background-color: #45a049;
+}
+.wlapp .notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4CAF50; 
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1000;
+}
+.wlapp .notification.show {
+  opacity: 1;
+}
+.wlapp .notification.error {
+  background-color: #f44336; 
+}
+.wlapp .container-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.wlapp .patate {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 55px;
+
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.1),
+    inset 8px 8px 15px rgba(255, 255, 255, 0.5),
+    inset -8px -8px 15px rgba(0, 0, 0, 0.05);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.4); 
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif; 
+  user-select: none;
+}
+.wlapp .cuisinepop.show {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pop-up 0.5s ease-out;
+}
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.wlapp .cuisinepop {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  border-radius: 70px;
+  z-index: 1000;
+  max-width: 420px;
+  width: 90%;
+
+
+  background: rgb(255, 255, 255);
+
+}
+.wlapp .cuisinepop-content {
+  text-align: center;
+  color: #333;
+
+
+}
+.wlapp .cuisinepop button {
+  width: 150px;
+  padding: 10px 0; 
+  font-size: 14px; 
+  color: #333; 
+  background-color: #e0e5ec; 
+  border: none;
+  border-radius: 20px; 
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.5), 
+              -4px -4px 8px rgba(0, 0, 0, 0.2); 
+  cursor: pointer;
+  transition: all 0.3s ease; 
+  margin: 10px 0; 
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp .cuisinepop button:hover {
+  box-shadow: 4px 4px 8px rgba(255, 255, 255, 0.4), 
+              -4px -4px 8px rgba(0, 0, 0, 0.3); 
+  transform: translateY(-2px); 
+}
+.wlapp .cuisinepop button:active {
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3), 
+              inset -2px -2px 4px rgba(0, 0, 0, 0.2); 
+  transform: translateY(1px);
+}
+.wlapp .cuisinepop button span {
+  font-family: 'Dela Gothic One', sans-serif; 
+}
+.wlapp .popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.wlapp .custom-popup {
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%) scale(0); 
+  opacity: 0; 
+  pointer-events: none; 
+}
+.wlapp .popup-content {
+  background: #fff;
+  border-radius: 50px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 20px;
+  max-width: 400px;
+}
+.wlapp .custom-popup.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pop-up 0.5s ease-out forwards;
+  pointer-events: all; 
+}
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.wlapp .homepara {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  border-radius: 70px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-shadow:
+    10px 10px 30px rgba(0, 0, 0, 0.15),
+    -10px -10px 30px rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  color: #333;
+  font-family: 'Dela Gothic One', sans-serif;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+
+  scrollbar-width: none; 
+  -ms-overflow-style: none;  
+}
+.wlapp .homepara::-webkit-scrollbar {
+  display: none; 
+}
+.wlapp .homepara.show {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      animation: pop-up 0.5s ease-out;
+    }
+@keyframes pop-up {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+.wlapp .voilepara {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 10;
+}
+.wlapp .homepara {
+  z-index: 20; 
+}
+.wlapp .icon-img {
+  width: 14px;
+  height: 14px;
+}
+.wlapp .emoji-button {
+background: none;
+border: none;
+font-size: 2rem;
+cursor: pointer;
+padding: 0;
+}
+.wlapp .cuisi-button {
+padding: 4px;
+background: transparent;
+border: none;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.wlapp .cuisi-button img.icon-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
+.wlapp #import-file {
+  display: none;
+}
+.wlapp .file-label {
+  display: inline-block;
+  text-align: center;
+  width: 150px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #333;
+  background-color: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: 4px 4px 8px rgba(255,255,255,0.5), -4px -4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Dela Gothic One', sans-serif;
+  margin: 10px 0;
+}
+.wlapp .file-label:hover {
+  box-shadow: 4px 4px 8px rgba(255,255,255,0.4), -4px -4px 8px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+.wlapp .file-label:active {
+  box-shadow: inset 2px 2px 4px rgba(255,255,255,0.3), inset -2px -2px 4px rgba(0,0,0,0.2);
+  transform: translateY(1px);
+}

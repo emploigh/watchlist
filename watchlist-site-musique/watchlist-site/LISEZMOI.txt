@@ -1,0 +1,21 @@
+WATCHLIST — site autonome (sans l'OS)
+
+Lancer : ouvre un terminal dans ce dossier puis
+    python3 -m http.server 8000
+et va sur http://localhost:8000
+(un serveur est conseillé : les jaquettes sont chargées depuis Internet.)
+
+Pages : Accueil, Liste, Rating, À voir (#/home, #/liste, #/rating, #/avoir).
+Données : enregistrées dans ton navigateur (mêmes clés que la version OS,
+donc la sauvegarde JSON est compatible dans les deux sens).
+Jaquettes : Jikan (MyAnimeList) → AniList → Kitsu, ou image perso
+(clic sur une jaquette). Liste › Réglages › « Récupérer les jaquettes »
+les cherche toutes d'un coup.
+Hébergement : copie le dossier tel quel sur GitHub Pages, Netlify, etc.
+
+MUSIQUE
+Page « Musique » (#/music) : lecture, aléatoire, répétition, volume, playlist,
+ajout de morceaux. Mini-lecteur dans la barre du haut, carte « En cours
+d'écoute » sur l'Accueil, touches multimédia du clavier prises en charge.
+Pour ajouter un morceau : place le MP3 dans le dossier music/ puis saisis son
+nom (ou colle un lien direct vers un MP3).
